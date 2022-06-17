@@ -11,7 +11,7 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.get("/api/users", (req: Request, res: Response) => {
-  res.json({ resutls: "Initial Server API Endpoint" });
+  res.json({ results: "Initial Server API Endpoint" });
 });
 
 if (process.env.NODE_ENV === "production") {
