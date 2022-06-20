@@ -27,12 +27,16 @@ const UserController = {
         throw new Error("Email already in use");
       }
 
-      if (role !== "SELLER" || role !== "BUYER") {
+      if (role !== ("SELLER" || "BUYER")) {
         res.status(400);
         throw new Error("Role needs to be either: SELLER or BUYER");
       }
-    
-      const user = await User.createUserByEmailAndPassword({ email, password, role });
+
+      const user = await User.createUserByEmailAndPassword({
+        email,
+        password,
+        role,
+      });
       const jti = v4();
       const { accessToken, refreshToken } = generateTokens(user, jti);
       await Auth.addRefreshTokenToWhitelist({
