@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev server.ts",
     "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "tsc",
+    "build": "tsc && prisma generate",
     "postinstall": "npm run build",
     "heroku-postbuild": "cd web && npm install && npm run build"
   },
