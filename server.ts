@@ -3,6 +3,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
+import userRouter from "./routes/UserRoute";
 
 const app = express();
 app.use(bodyParser.json());
@@ -10,9 +11,9 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/api/users", (req: Request, res: Response) => {
-  res.json({ results: "Initial Server API Endpoint" });
-});
+/* routes */
+app.use("/api/v1/users", userRouter);
+/* routes */
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "web/build")));
