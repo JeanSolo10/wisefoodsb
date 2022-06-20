@@ -7,9 +7,8 @@ import userRouter from "./routes/UserRoute";
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
-
 const PORT = process.env.PORT || 5000;
+app.use(cors());
 
 /* routes */
 app.use("/api/v1/users", userRouter);
