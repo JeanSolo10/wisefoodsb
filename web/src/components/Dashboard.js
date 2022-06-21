@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../utils/axios";
+// import { login, register } from "../features/redux/users/userSlice";
+// import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
+
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
