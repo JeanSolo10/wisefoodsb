@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Dashboard from "./components/Dashboard";
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 const App = () => {
-  const [backendData, setBackendData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await axios.get("/api/users");
-    setBackendData(response.data.results);
-  };
-
   return (
-    <div>
-      <h1>Hello World!</h1>
-      <div>
-        <p>{backendData}</p>
-      </div>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </>
   );
 };
 
