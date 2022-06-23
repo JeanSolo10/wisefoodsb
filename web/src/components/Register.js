@@ -66,8 +66,6 @@ const Register = () => {
     } else if (passwordConfirm.length < 1) {
       return setPasswordConfirmError("Please confirm password!");
     } else if (password !== passwordConfirm) {
-      console.log(password);
-      console.log(passwordConfirm);
       return setPasswordConfirmError("Passwords do not match!");
     } else {
       return setPasswordConfirmError("");
