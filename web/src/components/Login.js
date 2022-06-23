@@ -23,11 +23,6 @@ const Login = () => {
     //error validation
     validateEmail(data.get("email"));
     validatePassword(data.get("password"));
-
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
   };
 
   const validateEmail = (text) => {
@@ -132,11 +127,6 @@ const Login = () => {
               Log In
             </Button>
             <Grid container direction="column" alignItems="center">
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
               <Grid item flexDirection="row">
                 <Typography>
                   Don't have an account?
@@ -145,7 +135,7 @@ const Login = () => {
                     variant="body2"
                     style={{ paddingLeft: 5, fontSize: 16 }}
                   >
-                    {"Sign Up"}
+                    {"Register"}
                   </Link>
                 </Typography>
               </Grid>
