@@ -6,8 +6,6 @@ const initialState = {
     first_name: "",
     last_name: "",
     store_name: "",
-    accessToken: "",
-    refreshToken: "",
     role: "",
   },
 };
