@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login_user } from "../features/redux/users/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -22,9 +22,17 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [noUserError, setNoUserError] = useState("");
 
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (user.email) {
+      navigate("/");
+    }
+  }, []);
+
+  /* handlers */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
