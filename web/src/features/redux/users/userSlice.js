@@ -1,31 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {
-    email: "",
-    first_name: "",
-    last_name: "",
-    store_name: "",
-    accessToken: "",
-    refreshToken: "",
-    role: "",
-  },
+  id: "",
+  email: "",
+  first_name: "",
+  last_name: "",
+  store_name: "",
+  role: "",
 };
 
 export const usersSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action) => {
-      console.log(action.payload);
+    login_user: (state, action) => {
+      const { id, role, email } = action.payload;
+      state.email = email;
+      if (id) {
+        state.id = id;
+      }
+      if (role) {
+        state.role = role;
+      }
     },
-    register: (state, action) => {
-      console.log(action.payload);
+    logout_user: (state, action) => {
+      return {
+        email: "",
+        first_name: "",
+        last_name: "",
+        store_name: "",
+        role: "",
+      };
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, register } = usersSlice.actions;
+export const { login_user, logout_user } = usersSlice.actions;
 
 export default usersSlice.reducer;

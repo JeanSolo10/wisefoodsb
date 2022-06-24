@@ -5,6 +5,7 @@ import { isAuthenticated } from "../middleware/middleware";
 const router = Router();
 
 router.get("/", isAuthenticated, UsersController.users_get_all);
+router.get("/public", UsersController.users_get_all_public);
 router.post("/register", UsersController.user_register);
 router.post("/login", UsersController.user_login);
 router.post("/refreshToken", UsersController.user_refresh_token);

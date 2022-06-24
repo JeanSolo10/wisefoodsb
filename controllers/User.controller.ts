@@ -9,7 +9,17 @@ import jwt from "jsonwebtoken";
 
 const UserController = {
   users_get_all: async (req: Request, res: Response) => {
+    const email = req.query.email;
+    if (email) {
+      const user = await User.getUserByEmail(email);
+      return res.json({ results: user });
+    }
     const allUsers = await User.getAll();
+    return res.json({ results: allUsers });
+  },
+  users_get_all_public: async (req: Request, res: Response) => {
+    const email = req.query.email;
+    const allUsers = await User.getPublicUserByEmail(email);
     res.json({ results: allUsers });
   },
   user_register: async (req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +37,7 @@ const UserController = {
         throw new Error("Email already in use");
       }
 
-      if (role !== ("SELLER" || "BUYER")) {
+      if (role !== "SELLER" && role !== "BUYER") {
         res.status(400);
         throw new Error("Role needs to be either: SELLER or BUYER");
       }
