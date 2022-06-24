@@ -48,11 +48,15 @@ const Login = () => {
         }
         setNoUserError("");
         const body = { email, password };
-        const response = await axiosInstance.post("/api/v1/users/login", body);
-        if (response.status === 200) {
-          dispatch(login_user({ email }));
-
-          localStorage.setItem("jwt", response.data.results.accessToken);
+        const loginResponse = await axiosInstance.post(
+          "/api/v1/users/login",
+          body
+        );
+        if (loginResponse.status === 200) {
+          localStorage.setItem("jwt", loginResponse.data.results.accessToken);
+          /*retrieve information*/
+          const userData = await getUserData(email);
+          dispatch(login_user(userData));
           navigate("/");
         }
       } catch (error) {
@@ -63,6 +67,13 @@ const Login = () => {
         }
       }
     }
+  };
+
+  const getUserData = async (email) => {
+    const response = await axiosInstance.get("/api/v1/users/", {
+      params: { email: email },
+    });
+    return response.data.results;
   };
 
   const validateEmail = async (text) => {

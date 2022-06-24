@@ -14,8 +14,14 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     login_user: (state, action) => {
-      const email = action.payload.email;
+      const { id, role, email } = action.payload;
       state.email = email;
+      if (id) {
+        state.id = id;
+      }
+      if (role) {
+        state.role = role;
+      }
     },
     logout_user: (state, action) => {
       return {
