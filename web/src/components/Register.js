@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { login_user } from "../features/redux/users/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -31,9 +31,18 @@ const Register = () => {
   const [userRole, setUserRole] = useState("SELLER");
   const [error, setError] = useState("");
 
+  const user = useSelector((state) => state.users);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user.email) {
+      navigate("/");
+    }
+  }, []);
+
+  /* handlers */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

@@ -3,13 +3,22 @@ import axiosInstance from "../utils/axios";
 // import { login, register } from "../features/redux/users/userSlice";
 // import { useDispatch } from "react-redux";
 import ResponsiveAppBar from "./ResponsiveAppBar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
+  const user = useSelector((state) => state.users);
 
+  const navigate = useNavigate();
   // const dispatch = useDispatch();
 
   useEffect(() => {
+    //send user to login
+    if (!user.email) {
+      navigate("/login");
+    }
+
     fetchData();
   }, []);
 
