@@ -19,6 +19,21 @@ const User = {
     });
     return allUsers;
   },
+  getUserByEmail: async (email: any) => {
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+      select: {
+        email: true,
+        role: true,
+        first_name: true,
+        last_name: true,
+        id: true,
+      },
+    });
+    return user;
+  },
   getPublicUserByEmail: async (email: any) => {
     const user = await prisma.user.findFirst({
       where: {

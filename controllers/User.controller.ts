@@ -9,8 +9,13 @@ import jwt from "jsonwebtoken";
 
 const UserController = {
   users_get_all: async (req: Request, res: Response) => {
+    const email = req.query.email;
+    if (email) {
+      const user = await User.getUserByEmail(email);
+      return res.json({ results: user });
+    }
     const allUsers = await User.getAll();
-    res.json({ results: allUsers });
+    return res.json({ results: allUsers });
   },
   users_get_all_public: async (req: Request, res: Response) => {
     const email = req.query.email;
