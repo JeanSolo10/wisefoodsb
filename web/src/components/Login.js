@@ -55,10 +55,7 @@ const Login = () => {
           localStorage.setItem("jwt", response.data.results.accessToken);
           navigate("/");
         }
-        console.log(response.data.results);
       } catch (error) {
-        console.log("Error", error);
-        console.log(error.response.status);
         if (error.response.status === 400) {
           setNoUserError("Invalid credentials");
         } else {
