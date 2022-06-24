@@ -32,7 +32,7 @@ const UserController = {
         throw new Error("Email already in use");
       }
 
-      if (role !== ("SELLER" || "BUYER")) {
+      if (role !== "SELLER" && role !== "BUYER") {
         res.status(400);
         throw new Error("Role needs to be either: SELLER or BUYER");
       }
