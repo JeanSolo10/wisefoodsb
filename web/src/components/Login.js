@@ -10,38 +10,87 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { login_user } from "../features/redux/users/userSlice";
+import { useDispatch } from "react-redux";
+import axiosInstance from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [noUserError, setNoUserError] = useState("");
 
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    //error validation
-    validateEmail(data.get("email"));
-    validatePassword(data.get("password"));
-  };
+    const email = data.get("email");
+    const password = data.get("password");
 
-  const validateEmail = (text) => {
-    if (text.length < 1) {
-      return setEmailError("Please enter email!");
-    } else if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
-      return setEmailError("");
-    } else {
-      return setEmailError("Please enter a valid email!");
+    //error validation
+    const isValidEmail = validateEmail(email);
+    const isValidPassword = validatePassword(password);
+
+    if (isValidEmail && isValidPassword) {
+      try {
+        const emailResponse = await axiosInstance.get("/api/v1/users/public", {
+          params: {
+            email: email,
+          },
+        });
+        const isEmailInDatabase = emailResponse.data.results;
+        if (isEmailInDatabase.email === undefined) {
+          return setNoUserError("No user found with this Email!");
+        }
+        setNoUserError("");
+        const body = { email, password };
+        const response = await axiosInstance.post("/api/v1/users/login", body);
+        if (response.status === 200) {
+          dispatch(login_user({ email }));
+
+          localStorage.setItem("jwt", response.data.results.accessToken);
+          navigate("/");
+        }
+        console.log(response.data.results);
+      } catch (error) {
+        console.log("Error", error);
+        console.log(error.response.status);
+        if (error.response.status === 400) {
+          setNoUserError("Invalid credentials");
+        } else {
+          setNoUserError("An error has occurred. Please try again later");
+        }
+      }
     }
   };
 
-  const validatePassword = (text) => {
+  const validateEmail = async (text) => {
     if (text.length < 1) {
-      return setPasswordError("Please enter password!");
-    } else if (text.length > 6) {
-      return setPasswordError("");
+      setEmailError("Please enter email!");
+      return false;
+    } else if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
+      setEmailError("");
+      return true;
     } else {
-      return setPasswordError("Password must be at least 7 characters");
+      setEmailError("Please enter a valid email!");
+      return false;
+    }
+  };
+
+  const validatePassword = async (text) => {
+    if (text.length < 1) {
+      setPasswordError("Please enter password!");
+      return false;
+    } else if (text.length > 6) {
+      setPasswordError("");
+      return true;
+    } else {
+      setPasswordError("Password must be at least 7 characters");
+      return false;
     }
   };
 
@@ -66,6 +115,16 @@ const Login = () => {
           <Typography component="h1" variant="h5">
             Log In
           </Typography>
+          {noUserError && (
+            <Typography
+              sx={{
+                color: "#f44336",
+                marginTop: 2,
+              }}
+            >
+              {noUserError}
+            </Typography>
+          )}
           <Box
             component="form"
             onSubmit={handleSubmit}
