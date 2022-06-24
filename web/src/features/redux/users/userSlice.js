@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  id: "",
   email: "",
   first_name: "",
   last_name: "",
@@ -16,9 +17,6 @@ export const usersSlice = createSlice({
       const email = action.payload.email;
       state.email = email;
     },
-    register_user: (state, action) => {
-      console.log(action.payload);
-    },
     logout_user: (state, action) => {
       return {
         email: "",
@@ -32,6 +30,6 @@ export const usersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { login_user, register_user, logout_user } = usersSlice.actions;
+export const { login_user, logout_user } = usersSlice.actions;
 
 export default usersSlice.reducer;

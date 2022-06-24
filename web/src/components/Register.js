@@ -17,6 +17,10 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { login_user } from "../features/redux/users/userSlice";
+import { useDispatch } from "react-redux";
+import axiosInstance from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -24,16 +28,66 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
-
   const [userRole, setUserRole] = useState("SELLER");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //error validation
-    validateEmail(data.get("email"));
-    validatePassword(data.get("password"));
-    validatePasswordConfirm(data.get("password"), data.get("passwordConfirm"));
+
+    const email = data.get("email");
+    const password = data.get("password");
+    const passwordConfirm = data.get("passwordConfirm");
+
+    const isValidEmail = validateEmail(email);
+    const isValidPassword = validatePassword(password);
+    const isValidPasswordConfirm = validatePasswordConfirm(
+      password,
+      passwordConfirm
+    );
+
+    if (isValidEmail && isValidPassword && isValidPasswordConfirm) {
+      try {
+        const emailResponse = await axiosInstance.get("/api/v1/users/public", {
+          params: {
+            email: email,
+          },
+        });
+        const isEmailInDatabase = emailResponse.data.results;
+        if (isEmailInDatabase.email !== undefined) {
+          return setError("Email already exists!");
+        }
+        setError("");
+        const role = userRole;
+        const body = { email, password, role };
+
+        const signupResponse = await axiosInstance.post(
+          "/api/v1/users/register",
+          body
+        );
+
+        if (signupResponse.status === 200) {
+          /* login logic */
+          const loginResponse = await axiosInstance.post(
+            "/api/v1/users/login",
+            body
+          );
+          dispatch(login_user({ email }));
+          localStorage.setItem("jwt", loginResponse.data.results.accessToken);
+          navigate("/");
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          setError("Invalid request");
+        } else {
+          setError("An error has occurred. Please try again later");
+        }
+      }
+    }
   };
 
   const handleChange = (event) => {
@@ -42,33 +96,42 @@ const Register = () => {
 
   const validateEmail = (text) => {
     if (text.length < 1) {
-      return setEmailError("Please enter email!");
+      setEmailError("Please enter email!");
+      return false;
     } else if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
-      return setEmailError("");
+      setEmailError("");
+      return true;
     } else {
-      return setEmailError("Please enter a valid email!");
+      setEmailError("Please enter a valid email!");
+      return false;
     }
   };
 
   const validatePassword = (text) => {
     if (text.length < 1) {
-      return setPasswordError("Please enter password!");
+      setPasswordError("Please enter password!");
+      return false;
     } else if (text.length > 6) {
-      return setPasswordError("");
+      setPasswordError("");
+      return true;
     } else {
-      return setPasswordError("Password must be at least 7 characters");
+      setPasswordError("Password must be at least 7 characters");
+      return true;
     }
   };
 
   const validatePasswordConfirm = (password, passwordConfirm) => {
     if (password.length < 1) {
-      return;
+      return false;
     } else if (passwordConfirm.length < 1) {
-      return setPasswordConfirmError("Please confirm password!");
+      setPasswordConfirmError("Please confirm password!");
+      return false;
     } else if (password !== passwordConfirm) {
-      return setPasswordConfirmError("Passwords do not match!");
+      setPasswordConfirmError("Passwords do not match!");
+      return false;
     } else {
-      return setPasswordConfirmError("");
+      setPasswordConfirmError("");
+      return true;
     }
   };
 
@@ -93,6 +156,16 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
+          {error && (
+            <Typography
+              sx={{
+                color: "#f44336",
+                marginTop: 2,
+              }}
+            >
+              {error}
+            </Typography>
+          )}
           <Box
             component="form"
             noValidate
