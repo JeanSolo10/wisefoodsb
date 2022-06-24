@@ -76,8 +76,9 @@ const Register = () => {
             "/api/v1/users/login",
             body
           );
-          dispatch(login_user({ email }));
           localStorage.setItem("jwt", loginResponse.data.results.accessToken);
+          const userData = await getUserData(email);
+          dispatch(login_user(userData));
           navigate("/");
         }
       } catch (error) {
@@ -88,6 +89,13 @@ const Register = () => {
         }
       }
     }
+  };
+
+  const getUserData = async (email) => {
+    const response = await axiosInstance.get("/api/v1/users/", {
+      params: { email: email },
+    });
+    return response.data.results;
   };
 
   const handleChange = (event) => {
