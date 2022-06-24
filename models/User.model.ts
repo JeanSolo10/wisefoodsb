@@ -12,6 +12,7 @@ const User = {
   getAll: async () => {
     const allUsers = await prisma.user.findMany({
       select: {
+        id: true,
         email: true,
         role: true,
       },
