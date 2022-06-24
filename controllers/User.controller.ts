@@ -12,6 +12,11 @@ const UserController = {
     const allUsers = await User.getAll();
     res.json({ results: allUsers });
   },
+  users_get_all_public: async (req: Request, res: Response) => {
+    const email = req.query.email;
+    const allUsers = await User.getPublicUserByEmail(email);
+    res.json({ results: allUsers });
+  },
   user_register: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password, role } = req.body;
