@@ -14,6 +14,14 @@ const Store = {
     const allStores = await prisma.store.findMany();
     return allStores;
   },
+  getStoreById: async (id: number) => {
+    const store = await prisma.store.findFirst({
+      where: {
+        id,
+      },
+    });
+    return store;
+  },
   createStore: async (store: StoreInterface) => {
     return prisma.store.create({
       data: store,

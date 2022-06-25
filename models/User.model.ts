@@ -14,7 +14,10 @@ const User = {
       select: {
         id: true,
         email: true,
+        first_name: true,
+        last_name: true,
         role: true,
+        Store: true,
       },
     });
     return allUsers;
