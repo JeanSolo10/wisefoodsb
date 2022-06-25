@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import userRouter from "./routes/UserRoute";
+import storeRouter from "./routes/StoreRoute";
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,6 +13,7 @@ app.use(cors());
 
 /* routes */
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/stores", storeRouter);
 /* routes */
 
 if (process.env.NODE_ENV === "production") {
