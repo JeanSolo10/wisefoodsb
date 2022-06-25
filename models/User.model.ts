@@ -28,11 +28,12 @@ const User = {
         email,
       },
       select: {
+        id: true,
         email: true,
-        role: true,
         first_name: true,
         last_name: true,
-        id: true,
+        role: true,
+        Store: true,
       },
     });
     return user;
