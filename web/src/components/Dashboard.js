@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../utils/axios";
-// import { login, register } from "../features/redux/users/userSlice";
-// import { useDispatch } from "react-redux";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,10 +10,8 @@ const Dashboard = () => {
   const user = useSelector((state) => state.users);
 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
   useEffect(() => {
-    //send user to login
     if (!user.email) {
       navigate("/login");
     }
@@ -36,7 +32,6 @@ const DashBoardData = () => {
 
   const navigate = useNavigate();
 
-  /* user is seller but doesn't have a store */
   if (user.role === "SELLER" && !user.store) {
     return (
       <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
@@ -49,7 +44,6 @@ const DashBoardData = () => {
     );
   }
 
-  /* user is seller */
   if (user.role === "SELLER") {
     return (
       <>
@@ -58,7 +52,6 @@ const DashBoardData = () => {
     );
   }
 
-  /* user is buyer */
   if (user.role === "BUYER" && !user.first_name) {
     return (
       <>

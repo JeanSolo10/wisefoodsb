@@ -36,7 +36,6 @@ const StoreModal = ({ open, handleClose }) => {
   const user = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.users);
 
   const handleOpeningHoursChange = (event) => {
     setOpeningHours(event.target.value);
@@ -50,7 +49,6 @@ const StoreModal = ({ open, handleClose }) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    //error validation
 
     const name = data.get("storeName");
     const address = data.get("address");
@@ -90,7 +88,6 @@ const StoreModal = ({ open, handleClose }) => {
       setError("There was an error. Please try again later.");
     }
   };
-  /* Form */
 
   return (
     <Modal

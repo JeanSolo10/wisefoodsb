@@ -42,12 +42,9 @@ const Register = () => {
     }
   }, []);
 
-  /* handlers */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    //error validation
-
     const email = data.get("email");
     const password = data.get("password");
     const passwordConfirm = data.get("passwordConfirm");
@@ -80,7 +77,6 @@ const Register = () => {
         );
 
         if (signupResponse.status === 200) {
-          /* login logic */
           const loginResponse = await axiosInstance.post(
             "/api/v1/users/login",
             body

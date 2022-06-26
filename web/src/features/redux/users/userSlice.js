@@ -40,7 +40,6 @@ export const usersSlice = createSlice({
         action.payload.payload;
 
       if (action.payload.type === "add") {
-        // initialize store data
         state.store = {};
         state.store["name"] = name;
         state.store["address"] = address;
@@ -55,7 +54,6 @@ export const usersSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { login_user, logout_user, set_user_store } = usersSlice.actions;
 
 export default usersSlice.reducer;

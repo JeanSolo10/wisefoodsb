@@ -32,14 +32,11 @@ const Login = () => {
     }
   }, []);
 
-  /* handlers */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-
-    //error validation
     const isValidEmail = validateEmail(email);
     const isValidPassword = validatePassword(password);
 
@@ -62,7 +59,6 @@ const Login = () => {
         );
         if (loginResponse.status === 200) {
           localStorage.setItem("jwt", loginResponse.data.results.accessToken);
-          /*retrieve information*/
           const userData = await getUserData(email);
           dispatch(login_user(userData));
           navigate("/");
