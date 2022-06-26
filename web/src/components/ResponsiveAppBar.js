@@ -42,12 +42,12 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = (e) => {
     if (e.currentTarget.innerText === "Profile") {
-      return navigate("/seller_profile");
+      navigate("/seller_profile");
     }
     if (e.currentTarget.innerText === "Logout") {
       localStorage.removeItem("jwt");
       dispatch(logout_user());
-      return navigate("/login", { replace: true });
+      navigate("/login", { replace: true });
     }
     setAnchorElUser(null);
   };
