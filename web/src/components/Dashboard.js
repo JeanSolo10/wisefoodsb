@@ -65,4 +65,6 @@ const DashBoardData = () => {
       </>
     );
   }
+
+  return null;
 };
