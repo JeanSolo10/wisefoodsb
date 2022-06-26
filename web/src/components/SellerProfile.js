@@ -4,7 +4,7 @@ import { Button, Box, Grid, Typography } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import StoreModal from "./StoreModal";
 
-const Profile = () => {
+const SellerProfile = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -122,4 +122,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default SellerProfile;

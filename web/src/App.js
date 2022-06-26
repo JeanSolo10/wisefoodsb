@@ -3,7 +3,8 @@ import Dashboard from "./components/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Profile from "./components/Profile";
+import SellerProfile from "./components/SellerProfile";
+import BuyerProfile from "./components/BuyerProfile";
 
 const App = () => {
   return (
@@ -12,7 +13,8 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/seller_profile" element={<SellerProfile />} />
+        <Route path="/buyer_profile" element={<BuyerProfile />} />
       </Routes>
     </>
   );
