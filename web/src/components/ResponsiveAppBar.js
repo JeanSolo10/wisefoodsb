@@ -40,7 +40,7 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = (e) => {
     if (e.currentTarget.innerText === "Profile") {
-      console.log("on profile");
+      alert("on profile");
     }
     if (e.currentTarget.innerText === "Logout") {
       localStorage.removeItem("jwt");

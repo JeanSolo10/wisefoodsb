@@ -5,8 +5,8 @@ const initialState = {
   email: "",
   first_name: "",
   last_name: "",
-  store_name: "",
   role: "",
+  store: {},
 };
 
 export const usersSlice = createSlice({
@@ -14,13 +14,16 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     login_user: (state, action) => {
-      const { id, role, email } = action.payload;
+      const { id, role, email, Store } = action.payload;
       state.email = email;
       if (id) {
         state.id = id;
       }
       if (role) {
         state.role = role;
+      }
+      if (role === "SELLER" && Store) {
+        state.store = Store;
       }
     },
     logout_user: (state, action) => {
@@ -32,10 +35,27 @@ export const usersSlice = createSlice({
         role: "",
       };
     },
+    set_user_store: (state, action) => {
+      const { name, address, phone_number, opening_hours, closing_hours } =
+        action.payload.payload;
+
+      if (action.payload.type === "add") {
+        // initialize store data
+        state.store = {};
+        state.store["name"] = name;
+        state.store["address"] = address;
+        state.store["phone_number"] = phone_number;
+        state.store["opening_hours"] = opening_hours;
+        state.store["closing_hours"] = closing_hours;
+      }
+      if (action.payload.type === "update") {
+        console.log("update");
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login_user, logout_user } = usersSlice.actions;
+export const { login_user, logout_user, set_user_store } = usersSlice.actions;
 
 export default usersSlice.reducer;

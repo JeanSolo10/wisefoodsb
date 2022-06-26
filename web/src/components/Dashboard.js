@@ -5,6 +5,7 @@ import axiosInstance from "../utils/axios";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Typography, Link } from "@mui/material";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -18,25 +19,20 @@ const Dashboard = () => {
     if (!user.email) {
       navigate("/login");
     }
-
-    fetchData();
   }, []);
-
-  const fetchData = async () => {
-    const response = await axiosInstance.get("/api/v1/users");
-    setData(response.data.results);
-  };
 
   return (
     <>
       <ResponsiveAppBar />
-      <div>Dashboard</div>
-      {data.map((user, index) => (
-        <div key={index} className="userInfo">
-          <p>Email: {user.email}</p>
-          <p>Role {user.role}</p>
-        </div>
-      ))}
+      {user.role === "SELLER" && !user.store && (
+        <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
+          Cannot add items to sell.
+          <br />
+          Please navigate to{" "}
+          <Link onClick={() => navigate("/profile")}>Profile</Link> to add a
+          store.
+        </Typography>
+      )}
     </>
   );
 };
