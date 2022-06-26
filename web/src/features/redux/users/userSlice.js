@@ -33,6 +33,7 @@ export const usersSlice = createSlice({
         last_name: "",
         store_name: "",
         role: "",
+        store: {},
       };
     },
     set_user_store: (state, action) => {
