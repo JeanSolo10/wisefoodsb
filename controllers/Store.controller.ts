@@ -5,7 +5,6 @@ const StoreController = {
   stores_get_all: async (req: Request, res: Response) => {
     const id = Number(req.query.id);
     if (id) {
-      console.log("ID!!!", id)
       const store = await Store.getStoreById(id);
       return res.json({ results: store });
     }
