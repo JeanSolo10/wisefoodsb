@@ -2,14 +2,26 @@ import { Request, Response, NextFunction } from "express";
 import Store from "../models/Store.model";
 
 const StoreController = {
-  stores_get_all: async (req: Request, res: Response) => {
-    const id = Number(req.query.id);
-    if (id) {
-      const store = await Store.getStoreById(id);
-      return res.json({ results: store });
+  stores_get_all: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const allStores = await Store.getAll();
+      return res.json({ results: allStores });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
     }
-    const allStores = await Store.getAll();
-    return res.json({ results: allStores });
+  },
+  stores_get_by_id: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const store = await Store.getStoreById(Number(id));
+      return res.json({ results: store });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
   },
   stores_add: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -28,7 +40,6 @@ const StoreController = {
           "You must provide a name, address, and user id reference for store "
         );
       }
-
       const store = await Store.createStore({
         name,
         userId,
@@ -38,6 +49,29 @@ const StoreController = {
         closing_hours,
       });
       res.status(201).json({ results: { store } });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  stores_update: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const updatedUser = await Store.updateStore(Number(id), data);
+      res.status(201).json({ results: updatedUser });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  stores_delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const deletedProduct = await Store.deleteStore(Number(id));
+      res.sendStatus(204);
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);
