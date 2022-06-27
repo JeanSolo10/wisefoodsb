@@ -22,6 +22,22 @@ const UserController = {
     const allUsers = await User.getPublicUserByEmail(email);
     res.json({ results: allUsers });
   },
+  users_update: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const data = req.body;
+    const updatedUser = await User.updateUser(id, data);
+    res.status(201).json({ results: updatedUser });
+  },
+  users_delete: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const deletedProduct = await User.deleteUser(id);
+    res.sendStatus(204);
+  },
+  users_delete_tokens: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const deletedTokens = await User.deleteTokens(id);
+    res.sendStatus(204);
+  },
   user_register: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password, role } = req.body;
