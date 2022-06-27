@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Product from "../models/Product.model";
 
-const StoreController = {
+const ProductController = {
   products_get_all: async (req: Request, res: Response) => {
     const id = Number(req.query.id);
     if (id) {
@@ -54,4 +54,4 @@ const StoreController = {
   },
 };
 
-export default StoreController;
+export default ProductController;

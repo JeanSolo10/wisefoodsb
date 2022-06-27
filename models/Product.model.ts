@@ -12,7 +12,7 @@ export interface ProductInterface {
   orderId?: number;
 }
 
-const Store = {
+const Product = {
   getAll: async () => {
     const allProducts = await prisma.product.findMany();
     return allProducts;
@@ -32,4 +32,4 @@ const Store = {
   },
 };
 
-export default Store;
+export default Product;
