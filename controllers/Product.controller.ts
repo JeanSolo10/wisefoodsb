@@ -2,14 +2,30 @@ import { Request, Response, NextFunction } from "express";
 import Product from "../models/Product.model";
 
 const ProductController = {
-  products_get_all: async (req: Request, res: Response) => {
-    const id = Number(req.query.id);
-    if (id) {
-      const product = await Product.getProductById(id);
-      return res.json({ results: product });
+  products_get_all: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const allProducts = await Product.getAll();
+      return res.json({ results: allProducts });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
     }
-    const allProducts = await Product.getAll();
-    return res.json({ results: allProducts });
+  },
+  products_get_by_id: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { id } = req.params;
+      const product = await Product.getProductById(Number(id));
+      return res.json({ results: product });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
   },
   products_add: async (req: Request, res: Response, next: NextFunction) => {
     const {
@@ -46,6 +62,29 @@ const ProductController = {
         storeId,
       });
       res.status(201).json({ results: { product } });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_update: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const updateProduct = await Product.updateProduct(Number(id), data);
+      res.status(201).json({ results: updateProduct });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const deletedProduct = await Product.deleteProduct(Number(id));
+      res.sendStatus(204);
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);

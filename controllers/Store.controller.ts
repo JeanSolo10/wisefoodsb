@@ -59,8 +59,8 @@ const StoreController = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const updatedUser = await Store.updateStore(Number(id), data);
-      res.status(201).json({ results: updatedUser });
+      const updatedStore = await Store.updateStore(Number(id), data);
+      res.status(201).json({ results: updatedStore });
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);

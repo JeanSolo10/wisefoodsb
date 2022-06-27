@@ -30,6 +30,21 @@ const Product = {
       data: product,
     });
   },
+  updateProduct: async (id: number, data: any) => {
+    return prisma.product.update({
+      where: {
+        id,
+      },
+      data: data,
+    });
+  },
+  deleteProduct: async (id: number) => {
+    return prisma.product.delete({
+      where: {
+        id,
+      },
+    });
+  },
 };
 
 export default Product;
