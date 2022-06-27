@@ -73,6 +73,44 @@ const User = {
       },
     });
   },
+  updateUser: async (id: string, data: any) => {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: data,
+      select: {
+        id: true,
+        email: true,
+        first_name: true,
+        last_name: true,
+        role: true,
+      },
+    });
+  },
+  deleteUser: async (id: string) => {
+    return prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+  },
+  deleteTokens: async (id: string) => {
+    const tokenIds = await prisma.refreshToken.findMany({
+      where: {
+        userId: id,
+      },
+    });
+    for (const item of tokenIds) {
+      await prisma.refreshToken.delete({
+        where: {
+          id: item.id,
+        },
+      });
+    }
+
+    return;
+  },
 };
 
 export default User;

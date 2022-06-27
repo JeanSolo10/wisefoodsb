@@ -19,6 +19,9 @@ const Store = {
       where: {
         id,
       },
+      include: {
+        products: true,
+      },
     });
     return store;
   },
@@ -27,25 +30,18 @@ const Store = {
       data: store,
     });
   },
-  getPublicUserByEmail: async (email: any) => {
-    const user = await prisma.user.findFirst({
+  updateStore: async (id: number, data: any) => {
+    return prisma.store.update({
       where: {
-        email,
+        id,
       },
-      select: {
-        email: true,
-        role: true,
-      },
+      data: data,
     });
-    if (!user) {
-      return [];
-    }
-    return user;
   },
-  findUserByEmail: async (email: string) => {
-    return prisma.user.findUnique({
+  deleteStore: async (id: number) => {
+    return prisma.store.delete({
       where: {
-        email,
+        id,
       },
     });
   },
