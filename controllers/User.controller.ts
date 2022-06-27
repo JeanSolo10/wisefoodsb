@@ -9,18 +9,18 @@ import jwt from "jsonwebtoken";
 
 const UserController = {
   users_get_all: async (req: Request, res: Response) => {
-    const email = req.query.email;
-    if (email) {
-      const user = await User.getUserByEmail(email);
-      return res.json({ results: user });
-    }
     const allUsers = await User.getAll();
     return res.json({ results: allUsers });
   },
-  users_get_all_public: async (req: Request, res: Response) => {
+  users_get_by_email: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user = await User.getUserByEmail(id);
+    return res.json({ results: user });
+  },
+  users_get_public_user_by_email: async (req: Request, res: Response) => {
     const email = req.query.email;
-    const allUsers = await User.getPublicUserByEmail(email);
-    res.json({ results: allUsers });
+    const user = await User.getPublicUserByEmail(email);
+    res.json({ results: user });
   },
   users_update: async (req: Request, res: Response) => {
     const { id } = req.params;
