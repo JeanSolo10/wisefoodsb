@@ -25,6 +25,21 @@ const Order = {
       data: order,
     });
   },
+  updateOrder: async (id: number, data: any) => {
+    return prisma.cart.update({
+      where: {
+        id,
+      },
+      data: data,
+    });
+  },
+  deleteOrder: async (id: number) => {
+    return prisma.cart.delete({
+      where: {
+        id,
+      },
+    });
+  },
 };
 
 export default Order;
