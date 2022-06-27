@@ -72,8 +72,8 @@ const ProductController = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const updateProduct = await Product.updateProduct(Number(id), data);
-      res.status(201).json({ results: updateProduct });
+      const updatedProduct = await Product.updateProduct(Number(id), data);
+      res.status(201).json({ results: updatedProduct });
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);

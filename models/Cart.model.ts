@@ -23,6 +23,21 @@ const Cart = {
       data: cart,
     });
   },
+  updateCart: async (id: number, data: any) => {
+    return prisma.cart.update({
+      where: {
+        id,
+      },
+      data: data,
+    });
+  },
+  deleteCart: async (id: number) => {
+    return prisma.cart.delete({
+      where: {
+        id,
+      },
+    });
+  },
 };
 
 export default Cart;
