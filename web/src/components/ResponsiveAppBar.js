@@ -16,6 +16,7 @@ import StoreIcon from "@mui/icons-material/Store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout_user } from "../features/redux/users/userSlice";
+import axiosInstance from "../utils/axios";
 
 const pages = ["Cart"];
 const settings = ["Profile", "Logout"];
@@ -40,12 +41,13 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (e) => {
+  const handleCloseUserMenu = async (e) => {
     if (e.currentTarget.innerText === "Profile") {
       navigate("/seller_profile");
     }
     if (e.currentTarget.innerText === "Logout") {
       localStorage.removeItem("jwt");
+      await axiosInstance.delete(`/api/v1/users/logout/${user.id}`);
       dispatch(logout_user());
       navigate("/login", { replace: true });
     }
