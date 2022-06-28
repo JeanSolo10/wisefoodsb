@@ -43,7 +43,11 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = async (e) => {
     if (e.currentTarget.innerText === "Profile") {
-      navigate("/seller_profile");
+      if (user.role === "SELLER") {
+        navigate("/seller_profile");
+      } else {
+        navigate("/buyer_profile");
+      }
     }
     if (e.currentTarget.innerText === "Logout") {
       localStorage.removeItem("jwt");

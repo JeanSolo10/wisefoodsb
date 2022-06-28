@@ -37,32 +37,27 @@ const SellerProfile = () => {
 
       {Object.keys(user.store).length !== 0 && (
         <>
-          <Grid container spacing={2}>
+          <Grid container>
             <Grid item xs={6} md={8}>
               <Typography>Food Saved</Typography>
             </Grid>
             <Grid item xs={6} md={4}>
               <Typography>Money Saved</Typography>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6} sx={{ border: 1, borderColor: "black" }}>
               <Box
                 sx={{
-                  borderTop: 1,
-                  borderRight: 1,
-                  borderLeft: 1,
-                  borderColor: "black",
+                  backgroundColor: "#EEEEEE",
                 }}
               >
                 <Typography
-                  sx={{
-                    backgroundColor: "#EEEEEE",
-                  }}
                   align="center"
+                  style={{ fontWeight: 600, fontSize: 18 }}
                 >
                   {store.name}
                 </Typography>
               </Box>
-              <Box sx={{ border: 1, borderColor: "black" }}>
+              <Box>
                 <Box sx={{ mb: 2, mt: 1 }}>
                   <Typography align="center" sx={{ mb: 1, fontWeight: 600 }}>
                     Adress

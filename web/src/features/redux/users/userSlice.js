@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// TODO: update user data keys to Profile object for BUYER
 const initialState = {
   id: "",
   email: "",
   first_name: "",
   last_name: "",
+  phone_number: "",
+  address: "",
   role: "",
   store: {},
 };
@@ -52,9 +55,22 @@ export const usersSlice = createSlice({
         console.log("update");
       }
     },
+    set_user_buyer_data: (state, action) => {
+      const { first_name, last_name, phone_number, email, address } =
+        action.payload.payload;
+
+      if (action.payload.type === "update") {
+        state.first_name = first_name;
+        state.last_name = last_name;
+        state.phone_number = phone_number;
+        state.email = email;
+        state.address = address;
+      }
+    },
   },
 });
 
-export const { login_user, logout_user, set_user_store } = usersSlice.actions;
+export const { login_user, logout_user, set_user_store, set_user_buyer_data } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;
