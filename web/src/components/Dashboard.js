@@ -32,7 +32,7 @@ const DashBoardData = () => {
 
   const navigate = useNavigate();
 
-  if (user.role === "SELLER" && !user.store) {
+  if (user.role === "SELLER" && Object.keys(user.store).length === 0) {
     return (
       <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
         Cannot add items to sell.

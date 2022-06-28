@@ -67,7 +67,7 @@ const StoreModal = ({ open, handleClose }) => {
 
     try {
       const addStoreResponse = await axiosInstance.post(
-        "/api/v1/stores/add",
+        "/api/v1/stores/",
         body
       );
 

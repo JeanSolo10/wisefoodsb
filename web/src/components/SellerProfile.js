@@ -15,7 +15,7 @@ const SellerProfile = () => {
   return (
     <>
       <ResponsiveAppBar />
-      {!user.store && (
+      {Object.keys(user.store).length === 0 && (
         <>
           <StoreModal open={open} handleClose={handleClose} />
           <Box
@@ -35,7 +35,7 @@ const SellerProfile = () => {
         </>
       )}
 
-      {user.store && (
+      {Object.keys(user.store).length !== 0 && (
         <>
           <Grid container spacing={2}>
             <Grid item xs={6} md={8}>

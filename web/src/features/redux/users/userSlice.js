@@ -22,7 +22,7 @@ export const usersSlice = createSlice({
       if (role) {
         state.role = role;
       }
-      if (role === "SELLER" && Store) {
+      if (role === "SELLER" && Store !== null) {
         state.store = Store;
       }
     },
