@@ -35,7 +35,8 @@ const DashBoardData = () => {
   if (user.role === "SELLER" && Object.keys(user.store).length === 0) {
     return (
       <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
-        Cannot add items to sell.
+        Cannot add items to sell until a store is added!
+        <br />
         <br />
         Please navigate to{" "}
         <Link onClick={() => navigate("/seller_profile")}>Profile</Link> to add
@@ -57,6 +58,7 @@ const DashBoardData = () => {
       <>
         <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
           We require a first name to be provided to check items.
+          <br />
           <br />
           Please navigate to{" "}
           <Link onClick={() => navigate("/buyer_profile")}>Profile</Link> to add
