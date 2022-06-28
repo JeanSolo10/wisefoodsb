@@ -58,11 +58,9 @@ const Register = () => {
 
     if (isValidEmail && isValidPassword && isValidPasswordConfirm) {
       try {
-        const emailResponse = await axiosInstance.get("/api/v1/users/public", {
-          params: {
-            email: email,
-          },
-        });
+        const emailResponse = await axiosInstance.get(
+          `/api/v1/users/public/${email}`
+        );
         const isEmailInDatabase = emailResponse.data.results;
         if (isEmailInDatabase.email !== undefined) {
           return setError("Email already exists!");
@@ -97,9 +95,7 @@ const Register = () => {
   };
 
   const getUserData = async (email) => {
-    const response = await axiosInstance.get("/api/v1/users/", {
-      params: { email: email },
-    });
+    const response = await axiosInstance.get(`/api/v1/users/${email}`);
     return response.data.results;
   };
 

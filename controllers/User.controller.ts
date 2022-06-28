@@ -13,12 +13,12 @@ const UserController = {
     return res.json({ results: allUsers });
   },
   users_get_by_email: async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const user = await User.getUserByEmail(id);
+    const { email } = req.params;
+    const user = await User.getUserByEmail(email);
     return res.json({ results: user });
   },
   users_get_public_user_by_email: async (req: Request, res: Response) => {
-    const email = req.query.email;
+    const { email } = req.params;
     const user = await User.getPublicUserByEmail(email);
     res.json({ results: user });
   },
