@@ -83,6 +83,7 @@ const StoreModal = ({ open, handleClose }) => {
           },
         };
         dispatch(set_user_store(storeData));
+        handleClose();
       }
     } catch (error) {
       setError("There was an error. Please try again later.");

@@ -16,6 +16,8 @@ model User {
   password      String
   first_name    String?
   last_name     String?
+  phone_number  String?
+  address       String?
   role          Role           @default(SELLER)
   Store         Store?
   refreshTokens RefreshToken[]
