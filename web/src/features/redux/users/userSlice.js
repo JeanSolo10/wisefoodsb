@@ -17,7 +17,16 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     login_user: (state, action) => {
-      const { id, role, email, Store } = action.payload;
+      const {
+        id,
+        role,
+        email,
+        Store,
+        first_name,
+        last_name,
+        phone_number,
+        address,
+      } = action.payload;
       state.email = email;
       if (id) {
         state.id = id;
@@ -27,6 +36,12 @@ export const usersSlice = createSlice({
       }
       if (role === "SELLER" && Store !== null) {
         state.store = Store;
+      }
+      if (role === "BUYER") {
+        state.first_name = first_name;
+        state.last_name = last_name;
+        state.phone_number = phone_number;
+        state.address = address;
       }
     },
     logout_user: (state, action) => {
