@@ -4,6 +4,7 @@ import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Typography, Link } from "@mui/material";
+import BuyerDashboard from "./BuyerDashboard";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -32,6 +33,7 @@ const DashBoardData = () => {
 
   const navigate = useNavigate();
 
+  // Seller with no Store
   if (user.role === "SELLER" && Object.keys(user.store).length === 0) {
     return (
       <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
@@ -45,6 +47,7 @@ const DashBoardData = () => {
     );
   }
 
+  // Seller Dashboard
   if (user.role === "SELLER") {
     return (
       <>
@@ -53,19 +56,9 @@ const DashBoardData = () => {
     );
   }
 
+  // Buyer Dashboard
   if (user.role === "BUYER" && !user.first_name) {
-    return (
-      <>
-        <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
-          We require a first name to be provided to check items.
-          <br />
-          <br />
-          Please navigate to{" "}
-          <Link onClick={() => navigate("/buyer_profile")}>Profile</Link> to add
-          your information.
-        </Typography>
-      </>
-    );
+    return <BuyerDashboard />;
   }
 
   return null;
