@@ -53,10 +53,6 @@ const SellerDashboard = () => {
     <Box
       sx={{
         padding: 1,
-        "@media (min-width:780px)": {
-          ml: "auto",
-          mr: "auto",
-        },
       }}
     >
       <AddProductModal
@@ -67,7 +63,15 @@ const SellerDashboard = () => {
         listedItems={listedItems}
       />
       <Typography
-        sx={{ textAlign: "center", pt: 2, fontSize: "1.5rem", mb: 2 }}
+        sx={{
+          textAlign: "center",
+          pt: 2,
+          fontSize: "1.5rem",
+          mb: 2,
+          "@media (min-width:780px)": {
+            mb: 3,
+          },
+        }}
       >
         Currently Listed
       </Typography>
@@ -81,6 +85,11 @@ const SellerDashboard = () => {
         <Button
           variant="contained"
           style={{ backgroundColor: "#11AA60" }}
+          sx={{
+            "@media (min-width:780px)": {
+              mb: 3,
+            },
+          }}
           onClick={handleAddProduct}
         >
           Add Product
@@ -89,11 +98,10 @@ const SellerDashboard = () => {
       <Box
         sx={{
           "@media (min-width:780px)": {
-            display: "flex",
-            flexWrap: "wrap",
-            rowGap: 5,
-            columnGap: 14,
-            mx: 30,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, 400px)", //the width of the card
+            justifyContent: "center",
+            gridGap: "40px",
           },
         }}
       >
