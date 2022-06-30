@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { productData } from "../mockData/data";
 import InfoIcon from "@mui/icons-material/Info";
 import AddProductModal from "./AddProductModal";
+import axiosInstance from "../utils/axios";
 
 const SellerDashboard = () => {
   const user = useSelector((state) => state.users);
@@ -31,8 +32,12 @@ const SellerDashboard = () => {
     fetchListedItems();
   }, []);
 
-  const fetchListedItems = () => {
-    setListedItems(productData);
+  const fetchListedItems = async () => {
+    const response = await axiosInstance.get(
+      `/api/v1/products/store/${user.store.id}`
+    );
+    const products = response.data.results;
+    setListedItems(products);
   };
 
   const handleAddProduct = () => {
@@ -92,7 +97,7 @@ const SellerDashboard = () => {
           },
         }}
       >
-        {productData.map((product, index) => (
+        {listedItems.map((product, index) => (
           <Card key={index}>
             <Box
               sx={{
@@ -150,9 +155,9 @@ const SellerDashboard = () => {
                   style={{
                     backgroundColor: "#DDE2E4",
                   }}
-                  onClick={() => alert("add to cart")}
+                  onClick={() => alert("Edit Product")}
                 >
-                  Add to cart
+                  Edit Product
                 </Button>
                 <IconButton onClick={() => handleProductInfo(product)}>
                   <InfoIcon sx={{ fontSize: "30px" }} />

@@ -25,6 +25,14 @@ const Product = {
     });
     return product;
   },
+  getProductByStoreId: async (storeId: number) => {
+    const product = await prisma.product.findMany({
+      where: {
+        storeId,
+      },
+    });
+    return product;
+  },
   createProduct: async (product: ProductInterface) => {
     return prisma.product.create({
       data: product,

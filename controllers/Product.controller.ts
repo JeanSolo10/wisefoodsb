@@ -27,6 +27,21 @@ const ProductController = {
       }
     }
   },
+  products_get_by_store_id: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { storeId } = req.params;
+      const products = await Product.getProductByStoreId(Number(storeId));
+      return res.json({ results: products });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
   products_add: async (req: Request, res: Response, next: NextFunction) => {
     const {
       name,

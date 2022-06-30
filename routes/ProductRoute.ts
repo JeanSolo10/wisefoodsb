@@ -6,7 +6,12 @@ const router = Router();
 
 router.get("/", isAuthenticated, ProductController.products_get_all);
 router.get("/:id", isAuthenticated, ProductController.products_get_by_id);
-router.post("/add", isAuthenticated, ProductController.products_add);
+router.get(
+  "/store/:storeId",
+  isAuthenticated,
+  ProductController.products_get_by_store_id
+);
+router.post("/", isAuthenticated, ProductController.products_add);
 router.put("/:id", isAuthenticated, ProductController.products_update);
 router.delete("/:id", isAuthenticated, ProductController.products_delete);
 

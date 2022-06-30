@@ -65,21 +65,34 @@ const AddProductModal = ({
     const price = data.get("price");
     const original_price = data.get("original_price");
     const expiration_date = data.get("expiration_date");
-    const image = uploadInputRef.current.files[0];
+    const image =
+      uploadInputRef.current && uploadInputRef.current.files
+        ? uploadInputRef.current.files[0]
+        : "";
 
-    console.log(
-      "Object",
+    const formattedExpirationDate = new Date(expiration_date).toISOString();
+
+    const productData = {
       name,
-      food_type,
-      price,
-      original_price,
-      expiration_date,
-      image
-    );
+      type: food_type,
+      price: Number(price),
+      original_price: Number(original_price),
+      expiration_date: formattedExpirationDate,
+      imageUrl: "http://test/image",
+      storeId: user.store.id,
+    };
 
-    setListedItems(["test", ...listedItems]);
-
-    handleCloseAddProduct();
+    try {
+      const response = await axiosInstance.post(
+        "/api/v1/products/",
+        productData
+      );
+      const newItem = response.data.results.product;
+      setListedItems([newItem, ...listedItems]);
+      handleCloseAddProduct();
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
