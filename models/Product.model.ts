@@ -30,6 +30,11 @@ const Product = {
       where: {
         storeId,
       },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
     });
     return product;
   },
