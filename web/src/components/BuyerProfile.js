@@ -26,7 +26,7 @@ const BuyerProfile = () => {
         <Grid item xs={12} md={6} sx={{ border: 1, borderColor: "black" }}>
           <Box
             sx={{
-              backgroundColor: "#EEEEEE",
+              backgroundColor: "#DDE2E4",
             }}
           >
             <Typography

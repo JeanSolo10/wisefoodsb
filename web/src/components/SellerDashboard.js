@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -14,19 +14,34 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { productData } from "../mockData/data";
 import InfoIcon from "@mui/icons-material/Info";
-import ProductInfoModal from "./ProductInfoModal";
+import AddProductModal from "./AddProductModal";
 
-const BuyerDashboard = () => {
+const SellerDashboard = () => {
   const user = useSelector((state) => state.users);
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  console.log("ON BUYER");
+  const [listedItems, setListedItems] = useState([]);
+
+  /* Add Product Modal*/
+  const [openAddProduct, setOpenAddProduct] = useState(false);
+  const handleOpenAddProduct = () => setOpenAddProduct(true);
+  const handleCloseAddProduct = () => setOpenAddProduct(false);
+
+  useEffect(() => {
+    fetchListedItems();
+  }, []);
+
+  const fetchListedItems = () => {
+    setListedItems(productData);
+  };
+
+  const handleAddProduct = () => {
+    handleOpenAddProduct();
+  };
+
   const handleProductInfo = (product) => {
     setSelectedProduct(product);
-    handleOpen();
+    handleCloseAddProduct();
   };
 
   return (
@@ -39,16 +54,33 @@ const BuyerDashboard = () => {
         },
       }}
     >
-      <ProductInfoModal
-        open={open}
-        handleClose={handleClose}
+      <AddProductModal
+        openAddProduct={openAddProduct}
+        handleCloseAddProduct={handleCloseAddProduct}
         selectedProduct={selectedProduct}
+        setListedItems={setListedItems}
+        listedItems={listedItems}
       />
       <Typography
         sx={{ textAlign: "center", pt: 2, fontSize: "1.5rem", mb: 2 }}
       >
-        Welcome{user.first_name ? ` ${user.first_name}!` : `!`}
+        Currently Listed
       </Typography>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginTop={2}
+        marginBottom={2}
+      >
+        <Button
+          variant="contained"
+          style={{ backgroundColor: "#11AA60" }}
+          onClick={handleAddProduct}
+        >
+          Add Product
+        </Button>
+      </Box>
       <Box
         sx={{
           "@media (min-width:780px)": {
@@ -134,4 +166,4 @@ const BuyerDashboard = () => {
   );
 };
 
-export default BuyerDashboard;
+export default SellerDashboard;

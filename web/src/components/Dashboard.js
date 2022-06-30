@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Typography, Link } from "@mui/material";
 import BuyerDashboard from "./BuyerDashboard";
+import SellerDashboard from "./SellerDashboard";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -33,7 +34,8 @@ const DashBoardData = () => {
 
   const navigate = useNavigate();
 
-  // Seller with no Store
+  // TODO: Seller Dashboard [Initial Setup]
+  // send user to profile to add store
   if (user.role === "SELLER" && Object.keys(user.store).length === 0) {
     return (
       <Typography style={{ fontSize: 20, marginTop: 20, marginLeft: 10 }}>
@@ -49,15 +51,16 @@ const DashBoardData = () => {
 
   // Seller Dashboard
   if (user.role === "SELLER") {
-    return (
-      <>
-        <h1>Welcome {user.role}</h1>
-      </>
-    );
+    return <SellerDashboard />;
   }
 
-  // Buyer Dashboard
+  // TODO: Buyer Dashboard [Initial Setup]
+  // send user to profile to add first_name
   if (user.role === "BUYER" && !user.first_name) {
+    return <BuyerDashboard />;
+  }
+
+  if (user.role === "BUYER") {
     return <BuyerDashboard />;
   }
 
