@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { productData } from "../mockData/data";
 import InfoIcon from "@mui/icons-material/Info";
 import AddProductModal from "./AddProductModal";
+import UpdateProductModal from "./UpdateProductModal";
 import axiosInstance from "../utils/axios";
 
 const SellerDashboard = () => {
@@ -25,8 +26,11 @@ const SellerDashboard = () => {
 
   /* Add Product Modal*/
   const [openAddProduct, setOpenAddProduct] = useState(false);
+  const [openUpdateProduct, setOpenUpdateProduct] = useState(false);
   const handleOpenAddProduct = () => setOpenAddProduct(true);
   const handleCloseAddProduct = () => setOpenAddProduct(false);
+  const handleOpenUpdateProduct = () => setOpenUpdateProduct(true);
+  const handleCloseUpdateProduct = () => setOpenUpdateProduct(false);
 
   useEffect(() => {
     fetchListedItems();
@@ -43,12 +47,10 @@ const SellerDashboard = () => {
   const handleAddProduct = () => {
     handleOpenAddProduct();
   };
-
-  const handleProductInfo = (product) => {
+  const handleUpdateProduct = (product) => {
     setSelectedProduct(product);
-    handleCloseAddProduct();
+    handleOpenUpdateProduct();
   };
-
   return (
     <Box
       sx={{
@@ -58,9 +60,15 @@ const SellerDashboard = () => {
       <AddProductModal
         openAddProduct={openAddProduct}
         handleCloseAddProduct={handleCloseAddProduct}
-        selectedProduct={selectedProduct}
-        setListedItems={setListedItems}
         listedItems={listedItems}
+        setListedItems={setListedItems}
+      />
+      <UpdateProductModal
+        openUpdateProduct={openUpdateProduct}
+        handleCloseUpdateProduct={handleCloseUpdateProduct}
+        selectedProduct={selectedProduct}
+        listedItems={listedItems}
+        setListedItems={setListedItems}
       />
       <Typography
         sx={{
@@ -163,13 +171,10 @@ const SellerDashboard = () => {
                   style={{
                     backgroundColor: "#DDE2E4",
                   }}
-                  onClick={() => alert("Edit Product")}
+                  onClick={() => handleUpdateProduct(product)}
                 >
                   Edit Product
                 </Button>
-                <IconButton onClick={() => handleProductInfo(product)}>
-                  <InfoIcon sx={{ fontSize: "30px" }} />
-                </IconButton>
               </Box>
             </CardContent>
           </Card>

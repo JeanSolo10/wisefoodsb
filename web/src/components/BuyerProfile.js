@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Box, Grid, Typography } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
-import BuyerModal from "./BuyerModal";
+import UpdateBuyerModal from "./UpdateBuyerModal";
 
 const BuyerProfile = () => {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ const BuyerProfile = () => {
   return (
     <>
       <ResponsiveAppBar />
-      <BuyerModal open={open} handleClose={handleClose} />
+      <UpdateBuyerModal open={open} handleClose={handleClose} />
       <Grid container>
         <Grid item xs={6} md={8}>
           <Typography>Food Saved</Typography>

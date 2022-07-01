@@ -27,7 +27,7 @@ const style = {
   },
 };
 
-const BuyerModal = ({ open, handleClose }) => {
+const UpdateBuyerModal = ({ open, handleClose }) => {
   const [error, setError] = useState("");
 
   const user = useSelector((state) => state.users);
@@ -162,4 +162,4 @@ const BuyerModal = ({ open, handleClose }) => {
   );
 };
 
-export default BuyerModal;
+export default UpdateBuyerModal;

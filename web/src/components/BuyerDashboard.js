@@ -23,7 +23,6 @@ const BuyerDashboard = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log("ON BUYER");
   const handleProductInfo = (product) => {
     setSelectedProduct(product);
     handleOpen();
