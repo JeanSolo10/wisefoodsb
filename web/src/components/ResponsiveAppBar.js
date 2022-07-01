@@ -77,7 +77,6 @@ const ResponsiveAppBar = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-            onClick={() => alert("lol")}
           >
             WISEFOODSB
           </Typography>
