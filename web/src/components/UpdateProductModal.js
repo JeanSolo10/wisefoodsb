@@ -7,6 +7,11 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
 import foodTypes from "../utils/foodTypes";
 import axiosInstance from "../utils/axios";
@@ -30,6 +35,7 @@ const UpdateProductModal = ({
   selectedProduct,
   listedItems,
   setListedItems,
+  selectedProductIndex,
 }) => {
   const [error, setError] = useState("");
   const [foodType, setFoodType] = useState("");
@@ -113,11 +119,38 @@ const UpdateProductModal = ({
         productData
       );
       const updatedItem = response.data.results;
-      setListedItems([updatedItem, ...listedItems]);
+      const currentItems = listedItems;
+      currentItems[selectedProductIndex] = updatedItem;
+      setListedItems(currentItems);
       handleCloseUpdateProduct();
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  /* Dialog Reqs */
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteClose = async () => {
+    try {
+      const response = await axiosInstance.delete(
+        `/api/v1/products/${selectedProduct.id}`
+      );
+      const currentItems = listedItems;
+      currentItems.splice(selectedProductIndex, 1);
+      setListedItems(currentItems);
+    } catch (error) {
+      setError(error.message);
+    }
+
+    setOpen(false);
+    handleCloseUpdateProduct();
   };
 
   return (
@@ -234,11 +267,35 @@ const UpdateProductModal = ({
         <Button
           type="submit"
           fullWidth
-          sx={{ mb: 20, backgroundColor: "primary.main" }}
+          sx={{ mb: 2, backgroundColor: "primary.main" }}
           variant="contained"
         >
           Update Product
         </Button>
+        <Button
+          onClick={handleClickOpen}
+          fullWidth
+          style={{ backgroundColor: "red" }}
+          variant="contained"
+        >
+          Delete Product
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure you want to delete this product?"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleDeleteClose} autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Modal>
   );

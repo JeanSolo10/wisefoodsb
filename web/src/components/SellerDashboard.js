@@ -23,6 +23,7 @@ const SellerDashboard = () => {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [listedItems, setListedItems] = useState([]);
+  const [selectedProductIndex, setSelectedProductIndex] = useState("");
 
   /* Add Product Modal*/
   const [openAddProduct, setOpenAddProduct] = useState(false);
@@ -47,8 +48,9 @@ const SellerDashboard = () => {
   const handleAddProduct = () => {
     handleOpenAddProduct();
   };
-  const handleUpdateProduct = (product) => {
+  const handleUpdateProduct = (product, index) => {
     setSelectedProduct(product);
+    setSelectedProductIndex(index);
     handleOpenUpdateProduct();
   };
   return (
@@ -69,6 +71,7 @@ const SellerDashboard = () => {
         selectedProduct={selectedProduct}
         listedItems={listedItems}
         setListedItems={setListedItems}
+        selectedProductIndex={selectedProductIndex}
       />
       <Typography
         sx={{
@@ -171,7 +174,7 @@ const SellerDashboard = () => {
                   style={{
                     backgroundColor: "#DDE2E4",
                   }}
-                  onClick={() => handleUpdateProduct(product)}
+                  onClick={() => handleUpdateProduct(product, index)}
                 >
                   Edit Product
                 </Button>
