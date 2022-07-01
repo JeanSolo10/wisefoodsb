@@ -53,6 +53,22 @@ const SellerDashboard = () => {
     setSelectedProductIndex(index);
     handleOpenUpdateProduct();
   };
+
+  const formatDate = (date) => {
+    const originalDate = new Date(date);
+    let month = originalDate.getMonth() + 1;
+    let day = originalDate.getDate() + 1;
+    const year = originalDate.getFullYear();
+
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    const convertedDate = `${year}-${month}-${day}`;
+    return convertedDate;
+  };
   return (
     <Box
       sx={{
@@ -152,7 +168,7 @@ const SellerDashboard = () => {
             />
             <CardContent>
               <Typography variant="body1" color="text.secondary">
-                Best before {`${product.expiration_date}`}
+                Best before {formatDate(product.expiration_date)}
               </Typography>
               <Box
                 sx={{
