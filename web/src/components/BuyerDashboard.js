@@ -23,7 +23,6 @@ const BuyerDashboard = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const handleProductInfo = (product) => {
     setSelectedProduct(product);
     handleOpen();
@@ -47,7 +46,7 @@ const BuyerDashboard = () => {
       <Typography
         sx={{ textAlign: "center", pt: 2, fontSize: "1.5rem", mb: 2 }}
       >
-        Welcome{user.first_name ? ` ${user.username}!` : `!`}
+        Welcome{user.first_name ? ` ${user.first_name}!` : `!`}
       </Typography>
       <Box
         sx={{
@@ -61,13 +60,13 @@ const BuyerDashboard = () => {
         }}
       >
         {productData.map((product, index) => (
-          <Card>
+          <Card key={index}>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "#DDE2E4",
                 height: 40,
                 "@media (min-width:780px)": {
                   width: 400,
@@ -116,7 +115,7 @@ const BuyerDashboard = () => {
                     fontFamily: "Helvetica",
                   }}
                   style={{
-                    backgroundColor: "#EEEEEE",
+                    backgroundColor: "#DDE2E4",
                   }}
                   onClick={() => alert("add to cart")}
                 >
