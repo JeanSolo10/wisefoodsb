@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import { set_user_buyer_data } from "../features/redux/users/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import formatDate from "../utils/formatDate";
 import axiosInstance from "../utils/axios";
 
 const style = {
@@ -22,6 +23,17 @@ const style = {
 
 const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
   const dispatch = useDispatch();
+  const [storeName, setStoreName] = useState("");
+
+  useEffect(() => {
+    fetchStoreName(selectedProduct.storeId);
+  }, [selectedProduct]);
+
+  const fetchStoreName = async (storeId) => {
+    const response = await axiosInstance.get(`/api/v1/stores/${storeId}`);
+    const storeName = response.data.results.name;
+    setStoreName(storeName);
+  };
 
   return (
     <Modal
@@ -57,11 +69,11 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Shop</Typography>
-          <Typography>{selectedProduct.shop}</Typography>
+          <Typography>{storeName}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Best Before</Typography>
-          <Typography>{selectedProduct.expiration_date}</Typography>
+          <Typography>{formatDate(selectedProduct.expiration_date)}</Typography>
         </Box>
         <Button
           fullWidth
