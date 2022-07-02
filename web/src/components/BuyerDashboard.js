@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -15,14 +15,29 @@ import { useSelector } from "react-redux";
 import { productData } from "../mockData/data";
 import InfoIcon from "@mui/icons-material/Info";
 import ProductInfoModal from "./ProductInfoModal";
+import axiosInstance from "../utils/axios";
+import formatDate from "../utils/formatDate";
 
 const BuyerDashboard = () => {
   const user = useSelector((state) => state.users);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [listedProducts, setListedProducts] = useState([]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    fetchListedProducts();
+  }, []);
+
+  const fetchListedProducts = async () => {
+    const response = await axiosInstance.get(`/api/v1/products/`);
+    const products = response.data.results;
+    setListedProducts(products);
+  };
+
   const handleProductInfo = (product) => {
     setSelectedProduct(product);
     handleOpen();
@@ -32,10 +47,6 @@ const BuyerDashboard = () => {
     <Box
       sx={{
         padding: 1,
-        "@media (min-width:780px)": {
-          ml: "auto",
-          mr: "auto",
-        },
       }}
     >
       <ProductInfoModal
@@ -44,22 +55,29 @@ const BuyerDashboard = () => {
         selectedProduct={selectedProduct}
       />
       <Typography
-        sx={{ textAlign: "center", pt: 2, fontSize: "1.5rem", mb: 2 }}
+        sx={{
+          textAlign: "center",
+          pt: 2,
+          fontSize: "1.5rem",
+          mb: 2,
+          "@media (min-width:780px)": {
+            mb: 3,
+          },
+        }}
       >
         Welcome{user.first_name ? ` ${user.first_name}!` : `!`}
       </Typography>
       <Box
         sx={{
           "@media (min-width:780px)": {
-            display: "flex",
-            flexWrap: "wrap",
-            rowGap: 5,
-            columnGap: 14,
-            mx: 30,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, 400px)", //the width of the card
+            justifyContent: "center",
+            gridGap: "40px",
           },
         }}
       >
-        {productData.map((product, index) => (
+        {listedProducts.map((product, index) => (
           <Card key={index}>
             <Box
               sx={{
@@ -95,7 +113,7 @@ const BuyerDashboard = () => {
             />
             <CardContent>
               <Typography variant="body1" color="text.secondary">
-                Best before {`${product.expiration_date}`}
+                Best before {formatDate(product.expiration_date)}
               </Typography>
               <Box
                 sx={{

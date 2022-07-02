@@ -12,10 +12,9 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { productData } from "../mockData/data";
-import InfoIcon from "@mui/icons-material/Info";
 import AddProductModal from "./AddProductModal";
 import UpdateProductModal from "./UpdateProductModal";
+import formatDate from "../utils/formatDate";
 import axiosInstance from "../utils/axios";
 
 const SellerDashboard = () => {
@@ -54,21 +53,6 @@ const SellerDashboard = () => {
     handleOpenUpdateProduct();
   };
 
-  const formatDate = (date) => {
-    const originalDate = new Date(date);
-    let month = originalDate.getMonth() + 1;
-    let day = originalDate.getDate() + 1;
-    const year = originalDate.getFullYear();
-
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    if (day < 10) {
-      day = `0${day}`;
-    }
-    const convertedDate = `${year}-${month}-${day}`;
-    return convertedDate;
-  };
   return (
     <Box
       sx={{
