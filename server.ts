@@ -6,8 +6,6 @@ import "dotenv/config";
 import userRouter from "./routes/UserRoute";
 import storeRouter from "./routes/StoreRoute";
 import productRouter from "./routes/ProductRoute";
-import cartRouter from "./routes/CartRoute";
-import orderRouter from "./routes/OrderRoute";
 import stripeRouter from "./routes/StripeRoute";
 
 const app = express();
@@ -19,8 +17,6 @@ app.use(cors());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/stores", storeRouter);
 app.use("/api/v1/products", productRouter);
-app.use("/api/v1/carts", cartRouter);
-app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/stripe", stripeRouter);
 /* routes */
 
