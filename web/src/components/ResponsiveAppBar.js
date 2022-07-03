@@ -26,6 +26,7 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const user = useSelector((state) => state.users);
+  const { products } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -145,6 +146,27 @@ const ResponsiveAppBar = () => {
               paddingRight: 30,
             }}
           >
+            <Box
+              sx={{
+                backgroundColor: "red",
+                borderRadius: "50%",
+                marginLeft: 1,
+                borderColor: "error.main",
+                width: 40,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: "600",
+                  fontSize: 18,
+                }}
+              >
+                {products ? products.length : 0}
+              </Typography>
+            </Box>
             <Button
               style={{
                 backgroundColor: "white",
@@ -153,6 +175,9 @@ const ResponsiveAppBar = () => {
               }}
               variant="contained"
               endIcon={<ShoppingCartIcon />}
+              onClick={() => {
+                navigate("/cart");
+              }}
             >
               Cart
             </Button>
