@@ -72,8 +72,19 @@ const Cart = () => {
                     <Typography>{`¥${product.price}`}</Typography>
                   </Box>
                 ))}
-                <Box sx={{ mt: 2, borderTop: 1, borderColor: "#DDE2E4" }}>
-                  <Typography sx={{ textAlign: "end" }}>
+                <Box
+                  sx={{
+                    mt: 2,
+                    borderTop: 1,
+                    borderColor: "#DDE2E4",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "600", mt: 2 }}>
+                    Total:{" "}
+                  </Typography>
+                  <Typography sx={{ textAlign: "end", mt: 2 }}>
                     ¥{calculateTotal()}
                   </Typography>
                 </Box>
@@ -87,7 +98,9 @@ const Cart = () => {
                     mt: 3,
                   }}
                   style={{
-                    backgroundColor: "#DDE2E4",
+                    backgroundColor: "#11AA60",
+                    color: "white",
+                    fontWeight: "600",
                   }}
                   onClick={() => alert("TEST")}
                 >
@@ -134,8 +147,11 @@ const Cart = () => {
                 }}
               >
                 <CardHeader
+                  sx={{ height: 10 }}
                   title={product.name}
-                  titleTypographyProps={{ variant: "h6" }}
+                  titleTypographyProps={{
+                    variant: "h6",
+                  }}
                 />
                 <CardContent>
                   <Typography variant="body1" color="text.secondary">
@@ -166,7 +182,9 @@ const Cart = () => {
                       mt: 3,
                     }}
                     style={{
-                      backgroundColor: "#DDE2E4",
+                      backgroundColor: "#FF0002",
+                      color: "white",
+                      fontWeight: "600",
                     }}
                     onClick={() => handleRemoveFromCart(product)}
                   >

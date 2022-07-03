@@ -165,7 +165,9 @@ const BuyerDashboard = () => {
                       fontFamily: "Helvetica",
                     }}
                     style={{
-                      backgroundColor: "#DDE2E4",
+                      backgroundColor: "#FF0002",
+                      color: "white",
+                      fontWeight: 600,
                     }}
                     onClick={() => handleRemoveFromCart(product)}
                   >
