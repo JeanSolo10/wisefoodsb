@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import {
   Typography,
@@ -15,23 +15,29 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { remove_product } from "../features/redux/cart/cartSlice";
 import formatDate from "../utils/formatDate";
+import StripePay from "./StripePay";
 import axiosInstance from "../utils/axios";
 
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
+
+  const [total, setTotal] = useState(0);
 
   const handleRemoveFromCart = (product) => {
     dispatch(remove_product(product));
   };
+
+  useEffect(() => {
+    calculateTotal();
+  }, [products]);
 
   const calculateTotal = () => {
     let totalPrice = 0;
     for (const product of products) {
       totalPrice += product.price;
     }
-    return totalPrice;
+    setTotal(totalPrice);
   };
 
   return (
@@ -85,27 +91,10 @@ const Cart = () => {
                     Total:{" "}
                   </Typography>
                   <Typography sx={{ textAlign: "end", mt: 2 }}>
-                    ¥{calculateTotal()}
+                    ¥{total}
                   </Typography>
                 </Box>
-                <Button
-                  variant="contained"
-                  sx={{
-                    fontWeight: 500,
-                    height: "auto",
-                    color: "black",
-                    fontFamily: "Helvetica",
-                    mt: 3,
-                  }}
-                  style={{
-                    backgroundColor: "#11AA60",
-                    color: "white",
-                    fontWeight: "600",
-                  }}
-                  onClick={() => alert("TEST")}
-                >
-                  Complete your order
-                </Button>
+                <StripePay total={total} />
               </CardContent>
             </Card>
           </Box>
