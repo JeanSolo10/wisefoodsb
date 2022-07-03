@@ -8,8 +8,15 @@ export interface ProductInterface {
   expiration_date: Date;
   imageUrl: string;
   storeId?: number;
-  cartId?: number;
-  orderId?: number;
+  buyerId?: string;
+  is_available_in_market?: boolean;
+  transaction_status?: TransactionStatus;
+}
+
+export enum TransactionStatus {
+  INCOMPLETE = "INCOMPLETE",
+  PENDING = "PENDING",
+  COMPLETE = "COMPLETE",
 }
 
 const Product = {
@@ -29,6 +36,47 @@ const Product = {
     const product = await prisma.product.findMany({
       where: {
         storeId,
+      },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
+    });
+    return product;
+  },
+  getProductsByBuyerId: async (buyerId: string) => {
+    const products = await prisma.product.findMany({
+      where: {
+        buyerId,
+      },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
+    });
+    return products;
+  },
+  getProductsByAvailability: async (availability: boolean) => {
+    const product = await prisma.product.findMany({
+      where: {
+        is_available_in_market: availability,
+      },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
+    });
+    return product;
+  },
+  getProductByTransactionStatus: async (
+    transactionStatus: TransactionStatus
+  ) => {
+    const product = await prisma.product.findMany({
+      where: {
+        transaction_status: transactionStatus,
       },
       orderBy: [
         {

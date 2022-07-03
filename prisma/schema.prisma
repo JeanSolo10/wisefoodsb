@@ -54,7 +54,7 @@ model Product {
   is_available_in_market Boolean           @default(true)
   User                   User?             @relation(fields: [buyerId], references: [id])
   buyerId                 String?
-  transaction_completed  TransactionStatus @default(INCOMPLETE)
+  transaction_status  TransactionStatus @default(INCOMPLETE)
 }
 
 enum TransactionStatus {

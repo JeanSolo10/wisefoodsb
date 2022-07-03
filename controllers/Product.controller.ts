@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import Product from "../models/Product.model";
 
+export enum TransactionStatus {
+  INCOMPLETE = "INCOMPLETE",
+  PENDING = "PENDING",
+  COMPLETE = "COMPLETE",
+}
+
 const ProductController = {
   products_get_all: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -36,6 +42,57 @@ const ProductController = {
       const { storeId } = req.params;
       const products = await Product.getProductByStoreId(Number(storeId));
       return res.json({ results: products });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_get_by_buyerId: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { buyerId } = req.params;
+      const products = await Product.getProductsByBuyerId(buyerId);
+      return res.json({ results: products });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_get_by_availability: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { availability } = req.params;
+      const availabilityBoolean = availability == "true";
+      const products = await Product.getProductsByAvailability(
+        availabilityBoolean
+      );
+      return res.json({ results: products });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_get_by_transaction_status: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { transactionStatus } = req.params;
+      const trasactionStatusEnum = transactionStatus as TransactionStatus;
+      const product = await Product.getProductByTransactionStatus(
+        trasactionStatusEnum
+      );
+      return res.json({ results: product });
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);
