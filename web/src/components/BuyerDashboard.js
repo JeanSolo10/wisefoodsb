@@ -160,7 +160,7 @@ const BuyerDashboard = () => {
                     sx={{
                       fontWeight: 500,
                       height: "auto",
-                      width: 150,
+                      width: 200,
                       color: "black",
                       fontFamily: "Helvetica",
                     }}
