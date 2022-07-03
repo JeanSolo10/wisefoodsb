@@ -9,6 +9,7 @@ import StripePay from "./components/StripePay";
 import StripeSuccess from "./components/StripeSuccess";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/buyer_profile" element={<BuyerProfile />} />
           <Route path="/stripe_pay" element={<StripePay />} />
           <Route path="/stripe_success" element={<StripeSuccess />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </LocalizationProvider>
     </>

@@ -11,19 +11,23 @@ import {
   Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { productData } from "../mockData/data";
 import InfoIcon from "@mui/icons-material/Info";
 import ProductInfoModal from "./ProductInfoModal";
 import axiosInstance from "../utils/axios";
 import formatDate from "../utils/formatDate";
+import { add_product, remove_product } from "../features/redux/cart/cartSlice";
 
 const BuyerDashboard = () => {
   const user = useSelector((state) => state.users);
+  const { products } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [listedProducts, setListedProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState({});
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -41,6 +45,14 @@ const BuyerDashboard = () => {
   const handleProductInfo = (product) => {
     setSelectedProduct(product);
     handleOpen();
+  };
+
+  const handleAddToCart = (product) => {
+    dispatch(add_product(product));
+  };
+
+  const handleRemoveFromCart = (product) => {
+    dispatch(remove_product(product));
   };
 
   return (
@@ -123,22 +135,45 @@ const BuyerDashboard = () => {
                   mt: 2,
                 }}
               >
-                <Button
-                  variant="contained"
-                  sx={{
-                    fontWeight: 500,
-                    height: "auto",
-                    width: 150,
-                    color: "black",
-                    fontFamily: "Helvetica",
-                  }}
-                  style={{
-                    backgroundColor: "#DDE2E4",
-                  }}
-                  onClick={() => alert("add to cart")}
-                >
-                  Add to cart
-                </Button>
+                {products === null ||
+                products.some((element) => element.id === product.id) !==
+                  true ? (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontWeight: 500,
+                      height: "auto",
+                      width: 150,
+                      color: "black",
+                      fontFamily: "Helvetica",
+                    }}
+                    style={{
+                      backgroundColor: "#DDE2E4",
+                    }}
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to cart
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontWeight: 500,
+                      height: "auto",
+                      width: 200,
+                      color: "black",
+                      fontFamily: "Helvetica",
+                    }}
+                    style={{
+                      backgroundColor: "#FF0002",
+                      color: "white",
+                      fontWeight: 600,
+                    }}
+                    onClick={() => handleRemoveFromCart(product)}
+                  >
+                    Remove from cart
+                  </Button>
+                )}
                 <IconButton onClick={() => handleProductInfo(product)}>
                   <InfoIcon sx={{ fontSize: "30px" }} />
                 </IconButton>
