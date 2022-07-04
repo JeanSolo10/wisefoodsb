@@ -280,7 +280,7 @@ const BuyerProfile = () => {
                       padding: 1,
                     }}
                   >
-                    {product.Store.name}
+                    {product.Store.address}
                   </Typography>
                 </Box>
                 <Box>
