@@ -290,13 +290,17 @@ const UpdateProductModal = ({
               Upload Image
             </Button>
             {imageName ? (
-              <Typography>New Image: {imageName}</Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                New Image: {imageName}
+              </Typography>
             ) : selectedProduct.imageUrl ? (
-              <Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
                 Current Image description: {selectedProduct.name}
               </Typography>
             ) : uploadInputRef.current && uploadInputRef.current.files[0] ? (
-              <Typography>{uploadInputRef.current.files[0].name}</Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                {uploadInputRef.current.files[0].name}
+              </Typography>
             ) : null}
           </Box>
         </Box>

@@ -103,7 +103,10 @@ const AddProductModal = ({
   return (
     <Modal
       open={openAddProduct}
-      onClose={handleCloseAddProduct}
+      onClose={() => {
+        setImageName("");
+        handleCloseAddProduct();
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -206,6 +209,11 @@ const AddProductModal = ({
             >
               Upload Image
             </Button>
+            {imageName ? (
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                Selected Image: {imageName}
+              </Typography>
+            ) : null}
           </Box>
         </Box>
         <Button
