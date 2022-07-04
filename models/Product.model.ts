@@ -55,6 +55,9 @@ const Product = {
           id: "desc",
         },
       ],
+      include: {
+        Store: true,
+      },
     });
     return products;
   },
