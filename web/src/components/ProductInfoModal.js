@@ -49,7 +49,7 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
         <Box
           component="img"
           sx={{
-            height: 200,
+            height: 250,
             width: "100%",
           }}
           alt={`${selectedProduct.name}`}

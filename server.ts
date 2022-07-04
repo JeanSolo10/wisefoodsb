@@ -7,6 +7,7 @@ import userRouter from "./routes/UserRoute";
 import storeRouter from "./routes/StoreRoute";
 import productRouter from "./routes/ProductRoute";
 import stripeRouter from "./routes/StripeRoute";
+import AWSRouter from "./routes/AWSRoute";
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/stores", storeRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/stripe", stripeRouter);
+app.use("/api/v1/aws", AWSRouter);
 /* routes */
 
 if (process.env.NODE_ENV === "production") {

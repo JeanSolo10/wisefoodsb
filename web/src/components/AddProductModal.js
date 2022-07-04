@@ -11,6 +11,7 @@ import {
 import { set_user_store } from "../features/redux/users/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import foodTypes from "../utils/foodTypes";
+import axios from "axios";
 import axiosInstance from "../utils/axios";
 
 const style = {
@@ -71,17 +72,22 @@ const AddProductModal = ({
 
     const formattedExpirationDate = new Date(expiration_date).toISOString();
 
-    const productData = {
-      name,
-      type: food_type,
-      price: Number(price),
-      original_price: Number(original_price),
-      expiration_date: formattedExpirationDate,
-      imageUrl: "http://test/image",
-      storeId: user.store.id,
-    };
-
     try {
+      const awsUrlResponse = await axiosInstance.post("/api/v1/aws/s3Url/");
+      const { url } = awsUrlResponse.data;
+      await axios.put(url, image);
+      const imageUrl = url.split("?")[0];
+
+      const productData = {
+        name,
+        type: food_type,
+        price: Number(price),
+        original_price: Number(original_price),
+        expiration_date: formattedExpirationDate,
+        imageUrl: imageUrl,
+        storeId: user.store.id,
+      };
+
       const response = await axiosInstance.post(
         "/api/v1/products/",
         productData
@@ -201,13 +207,6 @@ const AddProductModal = ({
               Upload Image
             </Button>
           </Box>
-          {imageName && (
-            <Typography sx={{ mb: 3 }}>
-              {uploadInputRef.current.files[0].name.length > 50
-                ? `${uploadInputRef.current.files[0].name.substring(0, 60)}...`
-                : `${uploadInputRef.current.files[0].name}`}
-            </Typography>
-          )}
         </Box>
         <Button
           type="submit"

@@ -138,7 +138,7 @@ const SellerDashboard = () => {
         }}
       >
         {listedItems.map((product, index) => (
-          <Card key={index}>
+          <Card key={index} sx={{ mb: 2 }}>
             <Box
               sx={{
                 display: "flex",
@@ -164,6 +164,7 @@ const SellerDashboard = () => {
               component="img"
               height="150"
               sx={{
+                objectFit: "contain",
                 "@media (min-width:780px)": {
                   height: 200,
                 },

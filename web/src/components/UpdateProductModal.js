@@ -15,6 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useSelector, useDispatch } from "react-redux";
 import foodTypes from "../utils/foodTypes";
 import axiosInstance from "../utils/axios";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -93,36 +94,59 @@ const UpdateProductModal = ({
     const original_price = data.get("original_price");
     const expiration_date = data.get("expiration_date");
     const image =
-      uploadInputRef.current && uploadInputRef.current.files
+      uploadInputRef.current && uploadInputRef.current.files[0]
         ? uploadInputRef.current.files[0]
-        : "";
+        : selectedProduct.imageUrl;
 
-    //Potential logic when new file is selected
-
-    /*
-      uploadInputRef.current.files.length < 1 ? selectedProduct.imageUrl : uploadInputRef.current.files[0] 
-    */
     const formattedExpirationDate = convertDate(expiration_date, "ISOS");
 
-    const productData = {
-      name,
-      type: food_type,
-      price: Number(price),
-      original_price: Number(original_price),
-      expiration_date: formattedExpirationDate,
-      imageUrl: "http://test/image",
-    };
-
     try {
-      const response = await axiosInstance.put(
-        `/api/v1/products/${selectedProduct.id}`,
-        productData
-      );
-      const updatedItem = response.data.results;
-      const currentItems = listedItems;
-      currentItems[selectedProductIndex] = updatedItem;
-      setListedItems(currentItems);
-      handleCloseUpdateProduct();
+      if (image !== selectedProduct.imageUrl) {
+        const awsUrlResponse = await axiosInstance.post("/api/v1/aws/s3Url");
+        const { url } = awsUrlResponse.data;
+        await axios.put(url, image);
+        const imageUrl = url.split("?")[0];
+
+        const productData = {
+          name,
+          type: food_type,
+          price: Number(price),
+          original_price: Number(original_price),
+          expiration_date: formattedExpirationDate,
+          imageUrl: imageUrl,
+          storeId: user.store.id,
+        };
+
+        const response = await axiosInstance.put(
+          `/api/v1/products/${selectedProduct.id}`,
+          productData
+        );
+        const updatedItem = response.data.results;
+        const currentItems = listedItems;
+        currentItems[selectedProductIndex] = updatedItem;
+        setListedItems(currentItems);
+        handleCloseUpdateProduct();
+      } else {
+        const productData = {
+          name,
+          type: food_type,
+          price: Number(price),
+          original_price: Number(original_price),
+          expiration_date: formattedExpirationDate,
+          imageUrl: image,
+          storeId: user.store.id,
+        };
+
+        const response = await axiosInstance.put(
+          `/api/v1/products/${selectedProduct.id}`,
+          productData
+        );
+        const updatedItem = response.data.results;
+        const currentItems = listedItems;
+        currentItems[selectedProductIndex] = updatedItem;
+        setListedItems(currentItems);
+        handleCloseUpdateProduct();
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -156,7 +180,10 @@ const UpdateProductModal = ({
   return (
     <Modal
       open={openUpdateProduct}
-      onClose={handleCloseUpdateProduct}
+      onClose={() => {
+        setImageName("");
+        handleCloseUpdateProduct();
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -262,6 +289,15 @@ const UpdateProductModal = ({
             >
               Upload Image
             </Button>
+            {imageName ? (
+              <Typography>New Image: {imageName}</Typography>
+            ) : selectedProduct.imageUrl ? (
+              <Typography>
+                Current Image description: {selectedProduct.name}
+              </Typography>
+            ) : uploadInputRef.current && uploadInputRef.current.files[0] ? (
+              <Typography>{uploadInputRef.current.files[0].name}</Typography>
+            ) : null}
           </Box>
         </Box>
         <Button
