@@ -237,7 +237,7 @@ const BuyerProfile = () => {
           </Typography>
 
           {purchasedProducts.map((product, index) => (
-            <Accordion key={index} sx>
+            <Accordion key={index}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"

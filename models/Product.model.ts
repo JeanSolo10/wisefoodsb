@@ -45,6 +45,23 @@ const Product = {
     });
     return product;
   },
+  getProductByStoreIdAndAvailability: async (
+    storeId: number,
+    availability: boolean
+  ) => {
+    const product = await prisma.product.findMany({
+      where: {
+        storeId,
+        is_available_in_market: availability,
+      },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
+    });
+    return product;
+  },
   getProductsByBuyerId: async (buyerId: string) => {
     const products = await prisma.product.findMany({
       where: {
@@ -88,6 +105,40 @@ const Product = {
       ],
     });
     return product;
+  },
+  getProductByStoreAndTransactionStatus: async (
+    storeId: number,
+    transactionStatus: TransactionStatus
+  ) => {
+    const products = await prisma.product.findMany({
+      where: {
+        storeId,
+        transaction_status: transactionStatus,
+      },
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
+      select: {
+        id: true,
+        name: true,
+        storeId: true,
+        is_available_in_market: true,
+        buyerId: true,
+        price: true,
+        original_price: true,
+        transaction_status: true,
+        User: {
+          select: {
+            first_name: true,
+            last_name: true,
+            phone_number: true,
+          },
+        },
+      },
+    });
+    return products;
   },
   createProduct: async (product: ProductInterface) => {
     return prisma.product.create({
