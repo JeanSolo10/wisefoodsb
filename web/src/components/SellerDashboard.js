@@ -22,6 +22,7 @@ const SellerDashboard = () => {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [listedItems, setListedItems] = useState([]);
+  const [pendingItems, setPendingItems] = useState([]);
   const [selectedProductIndex, setSelectedProductIndex] = useState("");
 
   /* Add Product Modal*/
@@ -34,14 +35,23 @@ const SellerDashboard = () => {
 
   useEffect(() => {
     fetchListedItems();
+    fetchPendingItems();
   }, []);
 
   const fetchListedItems = async () => {
     const response = await axiosInstance.get(
-      `/api/v1/products/store/${user.store.id}`
+      `/api/v1/products/store/${user.store.id}/available/true`
     );
     const products = response.data.results;
     setListedItems(products);
+  };
+
+  const fetchPendingItems = async () => {
+    const response = await axiosInstance.get(
+      `/api/v1/products/store/${user.store.id}/transaction/PENDING`
+    );
+    const pendingProducts = response.data.results;
+    setPendingItems(pendingProducts);
   };
 
   const handleAddProduct = () => {
@@ -51,6 +61,17 @@ const SellerDashboard = () => {
     setSelectedProduct(product);
     setSelectedProductIndex(index);
     handleOpenUpdateProduct();
+  };
+
+  const handleCompleteTransaction = async (product) => {
+    const body = {
+      transaction_status: "COMPLETE",
+    };
+    await axiosInstance.put(`/api/v1/products/${product.id}`, body);
+    const updatedPendingItems = pendingItems.filter(
+      (item) => item.id !== product.id
+    );
+    setPendingItems(updatedPendingItems);
   };
 
   return (
@@ -183,6 +204,79 @@ const SellerDashboard = () => {
           </Card>
         ))}
       </Box>
+      <Grid container mt={4}>
+        <Grid item xs={12} md={12}>
+          <Typography
+            sx={{
+              textAlign: "center",
+              pt: 2,
+              pb: 2,
+              fontSize: "1.5rem",
+              borderBottom: 2,
+              borderColor: "#DDE2E4",
+              "@media (min-width:780px)": {
+                marginLeft: 8,
+                marginRight: 8,
+              },
+            }}
+          >
+            Products Sold Recently
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          {pendingItems.map((product, index) => (
+            <Box
+              key={`pendingProduct${index}`}
+              sx={{
+                "@media (min-width:780px)": {
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  "@media (min-width:780px)": {
+                    marginLeft: 8,
+                    marginRight: 8,
+                  },
+                },
+                pl: 4,
+                pr: 4,
+                pt: 2,
+                pb: 2,
+                borderBottom: 2,
+                borderColor: "#DDE2E4",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "1.5rem",
+                  "@media (min-width:780px)": {
+                    marginLeft: 8,
+                    marginRight: 8,
+                  },
+                }}
+              >
+                {product.name} - {`¥${product.price}`}
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  fontWeight: 500,
+                  height: "auto",
+                  color: "black",
+                  fontFamily: "Helvetica",
+                }}
+                style={{
+                  backgroundColor: "#11AA60",
+                  color: "white",
+                  fontWeight: "600",
+                }}
+                onClick={() => handleCompleteTransaction(product)}
+              >
+                Complete Transaction
+              </Button>
+            </Box>
+          ))}
+        </Grid>
+      </Grid>
     </Box>
   );
 };

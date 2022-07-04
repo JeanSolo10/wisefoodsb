@@ -48,6 +48,25 @@ const ProductController = {
       }
     }
   },
+  products_get_by_store_id_and_availability: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { storeId, availability } = req.params;
+      const availabilityBoolean = availability == "true";
+      const products = await Product.getProductByStoreIdAndAvailability(
+        Number(storeId),
+        availabilityBoolean
+      );
+      return res.json({ results: products });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
   products_get_by_buyerId: async (
     req: Request,
     res: Response,
@@ -93,6 +112,25 @@ const ProductController = {
         trasactionStatusEnum
       );
       return res.json({ results: product });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error.message);
+      }
+    }
+  },
+  products_get_by_store_id_and_transaction_status: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { storeId, transactionStatus } = req.params;
+      const trasactionStatusEnum = transactionStatus as TransactionStatus;
+      const products = await Product.getProductByStoreAndTransactionStatus(
+        Number(storeId),
+        trasactionStatusEnum
+      );
+      return res.json({ results: products });
     } catch (error) {
       if (error instanceof Error) {
         next(error.message);

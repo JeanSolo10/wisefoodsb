@@ -24,7 +24,6 @@ const settings = ["Profile", "Logout"];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const user = useSelector((state) => state.users);
   const { products } = useSelector((state) => state.cart);
 
@@ -129,49 +128,59 @@ const ResponsiveAppBar = () => {
           >
             WISEFOODSB
           </Typography>
-          <Box
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-            style={{
-              flexDirection: "row-reverse",
-              paddingRight: 30,
-            }}
-          >
+          {user.role === "BUYER" ? (
             <Box
-              sx={{
-                backgroundColor: "red",
-                borderRadius: "50%",
-                marginLeft: 1,
-                borderColor: "error.main",
-                width: 40,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+              sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+              style={{
+                flexDirection: "row-reverse",
+                paddingRight: 30,
               }}
             >
-              <Typography
+              <Box
                 sx={{
-                  fontWeight: "600",
-                  fontSize: 18,
+                  backgroundColor: "red",
+                  borderRadius: "50%",
+                  marginLeft: 1,
+                  borderColor: "error.main",
+                  width: 40,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                {products ? products.length : 0}
-              </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: 18,
+                  }}
+                >
+                  {products ? products.length : 0}
+                </Typography>
+              </Box>
+              <Button
+                style={{
+                  backgroundColor: "white",
+                  fontSize: "16px",
+                  color: "green",
+                }}
+                variant="contained"
+                endIcon={<ShoppingCartIcon />}
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
+                Cart
+              </Button>
             </Box>
-            <Button
+          ) : (
+            <Box
+              sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
               style={{
-                backgroundColor: "white",
-                fontSize: "16px",
-                color: "green",
+                flexDirection: "row-reverse",
+                paddingRight: 30,
               }}
-              variant="contained"
-              endIcon={<ShoppingCartIcon />}
-              onClick={() => {
-                navigate("/cart");
-              }}
-            >
-              Cart
-            </Button>
-          </Box>
+            ></Box>
+          )}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

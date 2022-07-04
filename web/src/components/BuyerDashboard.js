@@ -37,7 +37,9 @@ const BuyerDashboard = () => {
   }, []);
 
   const fetchListedProducts = async () => {
-    const response = await axiosInstance.get(`/api/v1/products/`);
+    const response = await axiosInstance.get(
+      `/api/v1/products/available/${true}`
+    );
     const products = response.data.results;
     setListedProducts(products);
   };
