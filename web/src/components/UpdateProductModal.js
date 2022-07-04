@@ -180,7 +180,10 @@ const UpdateProductModal = ({
   return (
     <Modal
       open={openUpdateProduct}
-      onClose={handleCloseUpdateProduct}
+      onClose={() => {
+        setImageName("");
+        handleCloseUpdateProduct();
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -286,6 +289,15 @@ const UpdateProductModal = ({
             >
               Upload Image
             </Button>
+            {imageName ? (
+              <Typography>New Image: {imageName}</Typography>
+            ) : selectedProduct.imageUrl ? (
+              <Typography>
+                Current Image description: {selectedProduct.name}
+              </Typography>
+            ) : uploadInputRef.current && uploadInputRef.current.files[0] ? (
+              <Typography>{uploadInputRef.current.files[0].name}</Typography>
+            ) : null}
           </Box>
         </Box>
         <Button
