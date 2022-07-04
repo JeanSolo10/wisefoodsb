@@ -138,7 +138,7 @@ const SellerDashboard = () => {
         }}
       >
         {listedItems.map((product, index) => (
-          <Card key={index}>
+          <Card key={index} sx={{ mb: 2 }}>
             <Box
               sx={{
                 display: "flex",
