@@ -55,7 +55,7 @@ export const usersSlice = createSlice({
       };
     },
     set_user_store: (state, action) => {
-      const { name, address, phone_number, opening_hours, closing_hours } =
+      const { name, address, phone_number, opening_hours, closing_hours, id } =
         action.payload.payload;
 
       if (action.payload.type === "add") {
@@ -65,6 +65,7 @@ export const usersSlice = createSlice({
         state.store["phone_number"] = phone_number;
         state.store["opening_hours"] = opening_hours;
         state.store["closing_hours"] = closing_hours;
+        state.store["id"] = id;
       }
       if (action.payload.type === "update") {
         console.log("update");

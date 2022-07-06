@@ -22,12 +22,16 @@ const SellerProfile = () => {
   const { store } = useSelector((state) => state.users);
 
   useEffect(() => {
-    fetchSoldProducts();
-  }, []);
+    if (Object.keys(user.store).length !== 0) {
+      fetchSoldProducts();
+    }
+  }, [user.store]);
 
   useEffect(() => {
-    fetchFoodSaved();
-    fetchMoneyEarned();
+    if (Object.keys(user.store).length !== 0) {
+      fetchFoodSaved();
+      fetchMoneyEarned();
+    }
   }, [soldProducts]);
 
   const fetchFoodSaved = () => {

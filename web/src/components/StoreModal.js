@@ -71,6 +71,10 @@ const StoreModal = ({ open, handleClose }) => {
         body
       );
 
+      console.log("STORE DATA", addStoreResponse.data);
+
+      const { id } = addStoreResponse.data.results.store;
+
       if (addStoreResponse.status === 201) {
         const storeData = {
           type: "add",
@@ -80,6 +84,7 @@ const StoreModal = ({ open, handleClose }) => {
             phone_number: phone_number,
             opening_hours: opening_hours,
             closing_hours: closing_hours,
+            id: id,
           },
         };
         dispatch(set_user_store(storeData));
