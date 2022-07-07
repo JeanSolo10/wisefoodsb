@@ -68,7 +68,12 @@ export const usersSlice = createSlice({
         state.store["id"] = id;
       }
       if (action.payload.type === "update") {
-        console.log("update");
+        console.log("updating Store!!!!");
+        state.store["name"] = name;
+        state.store["address"] = address;
+        state.store["phone_number"] = phone_number;
+        state.store["opening_hours"] = opening_hours;
+        state.store["closing_hours"] = closing_hours;
       }
     },
     set_user_buyer_data: (state, action) => {

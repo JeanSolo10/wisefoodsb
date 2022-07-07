@@ -73,6 +73,7 @@ const SellerProfile = () => {
         </>
       )}
 
+      <StoreModal open={open} handleClose={handleClose} isEdit={true} />
       {Object.keys(user.store).length !== 0 && (
         <Grid container mt={2}>
           <Grid
@@ -173,7 +174,7 @@ const SellerProfile = () => {
               </Typography>
             </Box>
             <Box>
-              <Box sx={{ mb: 2, mt: 1 }}>
+              <Box sx={{ mb: 2, mt: 2 }}>
                 <Typography align="center" sx={{ mb: 1, fontWeight: 600 }}>
                   Adress
                 </Typography>
@@ -208,6 +209,7 @@ const SellerProfile = () => {
                   sx={{
                     backgroundColor: "primary.main",
                   }}
+                  onClick={handleOpen}
                 >
                   Edit Store
                 </Button>
