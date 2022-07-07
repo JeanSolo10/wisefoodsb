@@ -132,7 +132,13 @@ const AddProductModal = ({
             label="Name"
             type="text"
             id="name"
-            style={{ marginBottom: 20, marginTop: 30 }}
+            sx={{
+              marginBottom: 3,
+              marginTop: 3,
+              "@media (min-width:780px)": {
+                mb: 4,
+              },
+            }}
           />
           <TextField
             required
@@ -141,7 +147,12 @@ const AddProductModal = ({
             label="Food type"
             type="text"
             id="type"
-            style={{ marginBottom: 20 }}
+            sx={{
+              marginBottom: 3,
+              "@media (min-width:780px)": {
+                mb: 4,
+              },
+            }}
             onChange={handleFoodTypeChange}
             defaultValue=""
             select
@@ -156,20 +167,28 @@ const AddProductModal = ({
             fullWidth
             required
             name="price"
-            label="Price"
+            label="Price ( ¥ - yen )"
             type="number"
             id="price"
-            style={{ marginBottom: 20 }}
+            sx={{
+              marginBottom: 3,
+              "@media (min-width:780px)": {
+                mb: 4,
+              },
+            }}
           />
           <TextField
             fullWidth
             required
             name="original_price"
-            label="Original price"
+            label="Original price ( ¥ - yen )"
             type="number"
             id="original_price"
-            style={{
-              marginBottom: 20,
+            sx={{
+              marginBottom: 3,
+              "@media (min-width:780px)": {
+                mb: 4,
+              },
             }}
           />
           <TextField
@@ -179,7 +198,12 @@ const AddProductModal = ({
             type="date"
             id="expiration_date"
             defaultValue={""}
-            style={{ marginBottom: 20 }}
+            sx={{
+              marginBottom: 3,
+              "@media (min-width:780px)": {
+                mb: 4,
+              },
+            }}
             helperText="Expiration Date"
           />
           <Box
