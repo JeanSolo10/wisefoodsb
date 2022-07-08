@@ -82,7 +82,7 @@ const Register = () => {
           localStorage.setItem("jwt", loginResponse.data.results.accessToken);
           const userData = await getUserData(email);
           dispatch(login_user(userData));
-          navigate("/");
+          navigate("/seller_profile");
         }
       } catch (error) {
         if (error.response.status === 400) {

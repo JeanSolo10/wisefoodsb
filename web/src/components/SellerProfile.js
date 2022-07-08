@@ -56,16 +56,37 @@ const SellerProfile = () => {
       {Object.keys(user.store).length === 0 && (
         <>
           <StoreModal open={open} handleClose={handleClose} />
+
           <Box
             display="flex"
+            flexDirection="column"
             justifyContent="center"
             alignItems="center"
             marginTop={2}
           >
+            <Typography
+              sx={{
+                marginBottom: 2,
+                padding: 1,
+                fontSize: 20,
+                fontWeight: 600,
+              }}
+            >
+              Welcome to WiseFoodSB!
+            </Typography>
+            <Typography sx={{ marginBottom: 2, padding: 1, fontSize: 18 }}>
+              Please add your store information by clicking the "Add Store"
+              button below
+            </Typography>
+            <Typography sx={{ marginBottom: 2, padding: 1, fontSize: 18 }}>
+              Once a store is added. You can go into the dashboard by clicking
+              on the top left corner logo, and begin adding products to sell!
+            </Typography>
             <Button
               variant="contained"
               style={{ backgroundColor: "#11AA60" }}
               onClick={handleOpen}
+              sx={{ width: 200, mt: 2 }}
             >
               Add Store
             </Button>
