@@ -103,7 +103,7 @@ const StoreModal = ({ open, handleClose }) => {
             },
           };
           dispatch(set_user_store(storeData));
-          setIsEdit(false);
+          setIsEdit(true);
           handleClose();
         }
       }
@@ -120,7 +120,12 @@ const StoreModal = ({ open, handleClose }) => {
       aria-describedby="modal-modal-description"
     >
       <Box component="form" sx={style} onSubmit={handleAddStore}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{ marginBottom: 2 }}
+        >
           {isEdit ? "Edit Store Details" : "Add Store Details"}
         </Typography>
         {error && (
@@ -142,7 +147,7 @@ const StoreModal = ({ open, handleClose }) => {
             type="text"
             id="storeName"
             defaultValue={user.store.name}
-            style={{ marginBottom: 40, marginTop: 30 }}
+            sx={{ marginBottom: 4, marginTop: 3 }}
           />
           <TextField
             required
@@ -152,7 +157,7 @@ const StoreModal = ({ open, handleClose }) => {
             type="text"
             id="address"
             defaultValue={user.store.address}
-            style={{ marginBottom: 40 }}
+            sx={{ marginBottom: 4 }}
           />
           <TextField
             fullWidth
@@ -160,7 +165,7 @@ const StoreModal = ({ open, handleClose }) => {
             label="Phone Number"
             type="string"
             id="phoneNumber"
-            style={{ marginBottom: 30 }}
+            sx={{ marginBottom: 4 }}
             helperText="Please enter only numbers"
             defaultValue={user.store.phone_number}
           />
@@ -172,10 +177,10 @@ const StoreModal = ({ open, handleClose }) => {
             select
             onChange={handleOpeningHoursChange}
             value={isEdit ? user.store.opening_hours : openingHours}
-            style={{
-              marginBottom: 20,
+            sx={{
+              marginBottom: 4,
               width: "45%",
-              marginRight: 28,
+              marginRight: 3.5,
             }}
           >
             {hoursOfOperation.map((option, index) => (
@@ -189,7 +194,7 @@ const StoreModal = ({ open, handleClose }) => {
             label="Close Hour"
             type="text"
             id="closeHour"
-            style={{ marginBottom: 20, width: "45%" }}
+            sx={{ marginBottom: 4, width: "45%" }}
             onChange={handleClosingHoursChange}
             value={isEdit ? user.store.closing_hours : openingHours}
             select

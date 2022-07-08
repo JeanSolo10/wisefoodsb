@@ -154,10 +154,7 @@ const SellerProfile = () => {
         </>
       )}
 
-      <StoreModal
-        open={open}
-        handleClose={handleClose}
-      />
+      <StoreModal open={open} handleClose={handleClose} />
       {Object.keys(user.store).length !== 0 && (
         <Grid container mt={2}>
           <Grid

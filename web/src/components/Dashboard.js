@@ -14,10 +14,13 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const abortCont = new AbortController();
+
     if (!user.email) {
       navigate("/login");
     }
-  }, []);
+    return () => abortCont.abort();
+  }, [user.email, navigate]);
 
   return (
     <>
