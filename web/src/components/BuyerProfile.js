@@ -358,7 +358,9 @@ const BuyerProfile = () => {
                       padding: 1,
                     }}
                   >
-                    {product.Store.address}
+                    {product.Store?.address
+                      ? product.Store.address
+                      : "Store was removed"}
                   </Typography>
                 </Box>
                 <Box>
@@ -378,7 +380,9 @@ const BuyerProfile = () => {
                       padding: 1,
                     }}
                   >
-                    {product.Store.phone_number}
+                    {product.Store?.phone_number
+                      ? product.Store.phone_number
+                      : "Store was removed"}
                   </Typography>
                 </Box>
               </AccordionDetails>

@@ -129,6 +129,7 @@ const Product = {
         price: true,
         original_price: true,
         transaction_status: true,
+        imageUrl: true,
         User: {
           select: {
             first_name: true,

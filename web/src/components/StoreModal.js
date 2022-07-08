@@ -28,12 +28,12 @@ const style = {
   },
 };
 
-const StoreModal = ({ open, handleClose, isEdit }) => {
+const StoreModal = ({ open, handleClose }) => {
+  const user = useSelector((state) => state.users);
   const [openingHours, setOpeningHours] = useState("");
   const [closingHours, setClosingHours] = useState("");
   const [error, setError] = useState("");
-
-  const user = useSelector((state) => state.users);
+  const [isEdit, setIsEdit] = useState(user.store?.name !== undefined);
 
   const dispatch = useDispatch();
 
@@ -103,6 +103,7 @@ const StoreModal = ({ open, handleClose, isEdit }) => {
             },
           };
           dispatch(set_user_store(storeData));
+          setIsEdit(false);
           handleClose();
         }
       }
@@ -120,7 +121,7 @@ const StoreModal = ({ open, handleClose, isEdit }) => {
     >
       <Box component="form" sx={style} onSubmit={handleAddStore}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add Store Details
+          {isEdit ? "Edit Store Details" : "Add Store Details"}
         </Typography>
         {error && (
           <Typography

@@ -7,6 +7,14 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContentText from "@mui/material/DialogContentText";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout_user } from "../features/redux/users/userSlice";
+import axios from "axios";
 import axiosInstance from "../utils/axios";
 
 const SellerProfile = () => {
@@ -14,12 +22,16 @@ const SellerProfile = () => {
   const [foodSaved, setFoodSaved] = useState(0);
   const [moneyEarned, setMoneyEarned] = useState(0);
   const [soldProducts, setSoldProducts] = useState([]);
+  const [error, setError] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const user = useSelector((state) => state.users);
   const { store } = useSelector((state) => state.users);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (Object.keys(user.store).length !== 0) {
@@ -48,6 +60,54 @@ const SellerProfile = () => {
       `/api/v1/products/store/${store.id}/transaction/COMPLETE`
     );
     setSoldProducts(response.data.results);
+  };
+
+  /* Dialog Reqs */
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDeleteClose = async () => {
+    try {
+      const productsResponse = await axiosInstance.get(
+        `/api/v1/products/store/${store.id}`
+      );
+      const products = productsResponse.data.results;
+      const productImageNames = [];
+
+      for (const product of products) {
+        if (
+          product.imageUrl.includes(
+            "https://wisefoodsb-bucket.s3.amazonaws.com/"
+          )
+        ) {
+          const imageAWSName = product.imageUrl.replace(
+            "https://wisefoodsb-bucket.s3.amazonaws.com/",
+            ""
+          );
+          productImageNames.push(imageAWSName);
+        }
+      }
+
+      for (const awsImageName of productImageNames) {
+        await axiosInstance.delete(`/api/v1/aws/${awsImageName}`);
+      }
+
+      await axiosInstance.delete(`/api/v1/stores/${user.store.id}`);
+
+      await axiosInstance.delete(`/api/v1/users/${user.id}`);
+      dispatch(logout_user());
+      navigate("/register", { replace: true });
+
+      setOpen(false);
+      handleDialogClose();
+    } catch (error) {
+      setError(error);
+    }
   };
 
   return (
@@ -94,7 +154,10 @@ const SellerProfile = () => {
         </>
       )}
 
-      <StoreModal open={open} handleClose={handleClose} isEdit={true} />
+      <StoreModal
+        open={open}
+        handleClose={handleClose}
+      />
       {Object.keys(user.store).length !== 0 && (
         <Grid container mt={2}>
           <Grid
@@ -240,9 +303,29 @@ const SellerProfile = () => {
                   style={{
                     backgroundColor: "#F40B27",
                   }}
+                  onClick={handleDialogOpen}
                 >
-                  Delete Store
+                  Delete Account
                 </Button>
+                <Dialog
+                  open={dialogOpen}
+                  onClose={handleDialogClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete your account?"}
+                  </DialogTitle>
+                  <DialogContentText sx={{ textAlign: "center" }}>
+                    All your information will be deleted from the site.
+                  </DialogContentText>
+                  <DialogActions>
+                    <Button onClick={handleDialogClose}>Cancel</Button>
+                    <Button onClick={handleDeleteClose} autoFocus>
+                      Delete
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </Box>
             </Box>
           </Grid>
@@ -321,7 +404,7 @@ const SellerProfile = () => {
                         padding: 1,
                       }}
                     >
-                      {`${product.User.first_name} ${product.User.last_name}`}
+                      {`${product.User?.first_name} ${product.User?.last_name}`}
                     </Typography>
                   </Box>
                 </AccordionDetails>

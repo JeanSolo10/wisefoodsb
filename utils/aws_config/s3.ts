@@ -27,3 +27,15 @@ export const generateUploadURL = async () => {
   const uploadURL = await s3.getSignedUrlPromise("putObject", params);
   return uploadURL;
 };
+
+export const deleteImageFromBucket = async (name: string) => {
+  const params = {
+    Bucket: bucketName,
+    Key: name,
+  };
+
+  s3.deleteObject(params, function (err, data) {
+    if (err) console.log(err, err.stack); // error
+    else return; // deleted
+  });
+};
