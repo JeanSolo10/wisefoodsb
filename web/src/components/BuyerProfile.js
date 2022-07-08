@@ -19,7 +19,6 @@ const BuyerProfile = () => {
   const handleClose = () => setOpen(false);
 
   const user = useSelector((state) => state.users);
-  const { store } = useSelector((state) => state.users);
 
   useEffect(() => {
     fetchPurchasedProducts();
@@ -50,6 +49,34 @@ const BuyerProfile = () => {
     <>
       <ResponsiveAppBar />
       <UpdateBuyerModal open={open} handleClose={handleClose} />
+      {!user.first_name ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          marginTop={2}
+        >
+          <Typography
+            sx={{
+              marginBottom: 2,
+              padding: 1,
+              fontSize: 20,
+              fontWeight: 600,
+            }}
+          >
+            Welcome to WiseFoodSB!
+          </Typography>
+          <Typography sx={{ marginBottom: 2, padding: 1, fontSize: 18 }}>
+            Please add a First Name (can be username) for your profile, by
+            clicking on the Update Profile button below.
+            <br />
+            <br />
+            This will help the store know who will pickup the product. Other
+            fields are not required, but can be added.
+          </Typography>
+        </Box>
+      ) : null}
       <Grid container mt={2}>
         <Grid
           item

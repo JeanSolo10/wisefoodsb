@@ -82,7 +82,11 @@ const Register = () => {
           localStorage.setItem("jwt", loginResponse.data.results.accessToken);
           const userData = await getUserData(email);
           dispatch(login_user(userData));
-          navigate("/seller_profile");
+          if (userRole === "SELLER") {
+            navigate("/seller_profile");
+          } else {
+            navigate("/buyer_profile");
+          }
         }
       } catch (error) {
         if (error.response.status === 400) {
