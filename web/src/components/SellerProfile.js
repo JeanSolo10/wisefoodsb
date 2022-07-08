@@ -202,6 +202,7 @@ const SellerProfile = () => {
                   alignContent: "center",
                   alignItems: "center",
                   justifyContent: "center",
+                  mt: 4,
                 }}
               >
                 <Button

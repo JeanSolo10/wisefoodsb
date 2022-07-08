@@ -68,7 +68,6 @@ export const usersSlice = createSlice({
         state.store["id"] = id;
       }
       if (action.payload.type === "update") {
-        console.log("updating Store!!!!");
         state.store["name"] = name;
         state.store["address"] = address;
         state.store["phone_number"] = phone_number;

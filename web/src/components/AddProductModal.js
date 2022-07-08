@@ -20,13 +20,13 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "75vw",
-  height: "75vh",
+  height: "80vh",
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
   "@media (min-width:780px)": {
-    width: 400,
+    width: "30vw",
   },
 };
 
