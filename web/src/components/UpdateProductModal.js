@@ -25,7 +25,7 @@ const style = {
   width: "75vw",
   height: "80vh",
   "@media (min-width:780px)": {
-    width: "30vw",
+    width: 400,
   },
   bgcolor: "background.paper",
   border: "1px solid #000",

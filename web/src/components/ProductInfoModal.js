@@ -11,13 +11,14 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "75vw",
-  height: "70vh",
+  height: "75vh",
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
   "@media (min-width:780px)": {
     width: 400,
+    height: "80vh",
   },
 };
 
@@ -51,34 +52,53 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
           sx={{
             height: 250,
             width: "100%",
+            display: "flex",
+            "@media (min-width:780px)": {
+              width: "80%",
+              marginLeft: "auto",
+              marginRight: "auto",
+            },
           }}
           alt={`${selectedProduct.name}`}
           src={`${selectedProduct.imageUrl}`}
         />
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Original price</Typography>
-          <Typography>{`¥${selectedProduct.original_price}`}</Typography>
+          <Typography
+            sx={{ lineHeight: 2 }}
+          >{`¥${selectedProduct.original_price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Current Price</Typography>
-          <Typography>{`¥${selectedProduct.price}`}</Typography>
+          <Typography
+            sx={{ lineHeight: 2 }}
+          >{`¥${selectedProduct.price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Type</Typography>
-          <Typography>{selectedProduct.type}</Typography>
+          <Typography sx={{ lineHeight: 2 }}>{selectedProduct.type}</Typography>
         </Box>
         <Box>
-          <Typography sx={{ fontWeight: 600 }}>Shop</Typography>
-          <Typography>{storeName}</Typography>
+          <Typography sx={{ fontWeight: 600 }}>Store</Typography>
+          <Typography sx={{ lineHeight: 2 }}>{storeName}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Best Before</Typography>
-          <Typography>{formatDate(selectedProduct.expiration_date)}</Typography>
+          <Typography sx={{ lineHeight: 2 }}>
+            {formatDate(selectedProduct.expiration_date)}
+          </Typography>
         </Box>
         <Button
           fullWidth
           variant="contained"
-          sx={{ mt: 2, mb: 2, backgroundColor: "primary.main" }}
+          sx={{
+            mt: 2,
+            mb: 2,
+            backgroundColor: "primary.main",
+            "@media (min-width:780px)": {
+              mt: 3,
+            },
+          }}
           onClick={() => alert("add to cart")}
         >
           Add to Cart
