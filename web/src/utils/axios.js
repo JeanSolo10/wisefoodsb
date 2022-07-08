@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { logout_user } from "../features/redux/users/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_ISDEV
@@ -23,6 +26,19 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+axiosInstance.interceptors.response.use(
+  (response) =>
+    new Promise((resolve, reject) => {
+      resolve(response);
+    }),
+  async (error) => {
+    if (error.response.status === 401) {
+      alert("Your session has expired! Please logout and log back in.");
+      return Promise.reject(error);
+    }
+  }
 );
 
 export default axiosInstance;
