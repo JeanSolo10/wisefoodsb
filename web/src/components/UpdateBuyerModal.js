@@ -153,7 +153,12 @@ const UpdateBuyerModal = ({ open, handleClose }) => {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 2, mb: 2, backgroundColor: "primary.main" }}
+          sx={{
+            mt: 2,
+            mb: 2,
+            backgroundColor: "primary.main",
+            fontWeight: 600,
+          }}
         >
           Update Profile
         </Button>

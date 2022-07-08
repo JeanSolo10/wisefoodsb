@@ -116,7 +116,7 @@ const SellerDashboard = () => {
       >
         <Button
           variant="contained"
-          style={{ backgroundColor: "#11AA60" }}
+          style={{ backgroundColor: "#11AA60", fontWeight: 600 }}
           sx={{
             "@media (min-width:780px)": {
               mb: 3,
@@ -187,10 +187,11 @@ const SellerDashboard = () => {
                 <Button
                   variant="contained"
                   sx={{
-                    fontWeight: 500,
+                    fontWeight: 600,
                     height: "auto",
                     width: 150,
                     color: "black",
+
                     fontFamily: "Helvetica",
                   }}
                   style={{

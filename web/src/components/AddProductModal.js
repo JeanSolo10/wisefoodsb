@@ -224,7 +224,8 @@ const AddProductModal = ({
             />
             <Button
               style={{
-                backgroundColor: "#B2BEC3",
+                backgroundColor: "#9aaab0",
+                fontWeight: 600,
               }}
               onClick={() =>
                 uploadInputRef.current && uploadInputRef.current.click()
@@ -245,7 +246,7 @@ const AddProductModal = ({
           fullWidth
           sx={{ mb: 20 }}
           variant="contained"
-          style={{ backgroundColor: "#11AA60" }}
+          style={{ backgroundColor: "#11AA60", fontWeight: 600 }}
         >
           Add Product
         </Button>

@@ -249,6 +249,7 @@ const BuyerProfile = () => {
                 variant="contained"
                 sx={{
                   backgroundColor: "primary.main",
+                  fontWeight: 600,
                 }}
                 onClick={handleOpen}
               >
@@ -258,6 +259,7 @@ const BuyerProfile = () => {
                 variant="contained"
                 style={{
                   backgroundColor: "#F40B27",
+                  fontWeight: 600,
                 }}
                 onClick={handleDialogOpen}
               >

@@ -152,6 +152,7 @@ const BuyerDashboard = () => {
                     }}
                     style={{
                       backgroundColor: "#DDE2E4",
+                      fontWeight: 600,
                     }}
                     onClick={() => handleAddToCart(product)}
                   >
