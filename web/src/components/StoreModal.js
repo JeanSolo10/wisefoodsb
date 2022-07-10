@@ -56,6 +56,13 @@ const StoreModal = ({ open, handleClose }) => {
     const opening_hours = openingHours;
     const closing_hours = closingHours;
 
+    setError("");
+
+    if (isNaN(Number(phone_number))) {
+      setError("Phone number must contain numbers only!");
+      return;
+    }
+
     const body = {
       name: name,
       address: address,
@@ -109,6 +116,8 @@ const StoreModal = ({ open, handleClose }) => {
       }
     } catch (error) {
       setError("There was an error. Please try again later.");
+    } finally {
+      setError("");
     }
   };
 
@@ -161,13 +170,17 @@ const StoreModal = ({ open, handleClose }) => {
           />
           <TextField
             fullWidth
+            required
             name="phoneNumber"
             label="Phone Number"
-            type="string"
+            type="text"
             id="phoneNumber"
             sx={{ marginBottom: 4 }}
             helperText="Please enter only numbers"
             defaultValue={user.store.phone_number}
+            error={
+              error === "Phone number must contain numbers only!" ? true : false
+            }
           />
           <TextField
             name="openHour"
@@ -176,7 +189,7 @@ const StoreModal = ({ open, handleClose }) => {
             id="openHour"
             select
             onChange={handleOpeningHoursChange}
-            value={isEdit ? user.store.opening_hours : openingHours}
+            defaultValue={isEdit ? user.store.opening_hours : openingHours}
             sx={{
               marginBottom: 4,
               width: "45%",
@@ -196,7 +209,11 @@ const StoreModal = ({ open, handleClose }) => {
             id="closeHour"
             sx={{ marginBottom: 4, width: "45%" }}
             onChange={handleClosingHoursChange}
-            value={isEdit ? user.store.closing_hours : openingHours}
+            defaultValue={
+              isEdit && user.store.closing_hours
+                ? user.store.closing_hours
+                : closingHours
+            }
             select
           >
             {hoursOfOperation.map((option, index) => (
