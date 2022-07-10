@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import StoreIcon from "@mui/icons-material/Store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -185,7 +186,18 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <AccountBoxIcon
+                  sx={{
+                    display: { xs: "flex", md: "flex" },
+                    mr: 1,
+                    color: "white",
+                    fontSize: 40,
+                    "@media (min-width:780px)": {
+                      fontSize: 45,
+                      mr: 2,
+                    },
+                  }}
+                />
               </IconButton>
             </Tooltip>
             <Menu

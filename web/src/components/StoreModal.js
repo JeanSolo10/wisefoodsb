@@ -29,11 +29,11 @@ const style = {
 };
 
 const StoreModal = ({ open, handleClose }) => {
+  const user = useSelector((state) => state.users);
   const [openingHours, setOpeningHours] = useState("");
   const [closingHours, setClosingHours] = useState("");
   const [error, setError] = useState("");
-
-  const user = useSelector((state) => state.users);
+  const [isEdit, setIsEdit] = useState(user.store?.name !== undefined);
 
   const dispatch = useDispatch();
 
@@ -56,6 +56,13 @@ const StoreModal = ({ open, handleClose }) => {
     const opening_hours = openingHours;
     const closing_hours = closingHours;
 
+    setError("");
+
+    if (isNaN(Number(phone_number))) {
+      setError("Phone number must contain numbers only!");
+      return;
+    }
+
     const body = {
       name: name,
       address: address,
@@ -66,32 +73,51 @@ const StoreModal = ({ open, handleClose }) => {
     };
 
     try {
-      const addStoreResponse = await axiosInstance.post(
-        "/api/v1/stores/",
-        body
-      );
+      if (isEdit) {
+        const editBody = body;
+        delete editBody.userId;
+        const editStoreResponse = await axiosInstance.put(
+          `/api/v1/stores/${user.store.id}`,
+          editBody
+        );
 
-      console.log("STORE DATA", addStoreResponse.data);
+        if (editStoreResponse.status === 201) {
+          const userData = {
+            type: "update",
+            payload: editBody,
+          };
+          dispatch(set_user_store(userData));
+          handleClose();
+        }
+      } else {
+        const addStoreResponse = await axiosInstance.post(
+          "/api/v1/stores/",
+          body
+        );
 
-      const { id } = addStoreResponse.data.results.store;
+        const { id } = addStoreResponse.data.results.store;
 
-      if (addStoreResponse.status === 201) {
-        const storeData = {
-          type: "add",
-          payload: {
-            name: name,
-            address: address,
-            phone_number: phone_number,
-            opening_hours: opening_hours,
-            closing_hours: closing_hours,
-            id: id,
-          },
-        };
-        dispatch(set_user_store(storeData));
-        handleClose();
+        if (addStoreResponse.status === 201) {
+          const storeData = {
+            type: "add",
+            payload: {
+              name: name,
+              address: address,
+              phone_number: phone_number,
+              opening_hours: opening_hours,
+              closing_hours: closing_hours,
+              id: id,
+            },
+          };
+          dispatch(set_user_store(storeData));
+          setIsEdit(true);
+          handleClose();
+        }
       }
     } catch (error) {
       setError("There was an error. Please try again later.");
+    } finally {
+      setError("");
     }
   };
 
@@ -103,8 +129,13 @@ const StoreModal = ({ open, handleClose }) => {
       aria-describedby="modal-modal-description"
     >
       <Box component="form" sx={style} onSubmit={handleAddStore}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add Store Details
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{ marginBottom: 2 }}
+        >
+          {isEdit ? "Edit Store Details" : "Add Store Details"}
         </Typography>
         {error && (
           <Typography
@@ -124,7 +155,8 @@ const StoreModal = ({ open, handleClose }) => {
             label="Store name"
             type="text"
             id="storeName"
-            style={{ marginBottom: 40, marginTop: 30 }}
+            defaultValue={user.store.name}
+            sx={{ marginBottom: 4, marginTop: 3 }}
           />
           <TextField
             required
@@ -133,16 +165,22 @@ const StoreModal = ({ open, handleClose }) => {
             label="Address"
             type="text"
             id="address"
-            style={{ marginBottom: 40 }}
+            defaultValue={user.store.address}
+            sx={{ marginBottom: 4 }}
           />
           <TextField
             fullWidth
+            required
             name="phoneNumber"
             label="Phone Number"
-            type="number"
+            type="text"
             id="phoneNumber"
-            style={{ marginBottom: 30 }}
+            sx={{ marginBottom: 4 }}
             helperText="Please enter only numbers"
+            defaultValue={user.store.phone_number}
+            error={
+              error === "Phone number must contain numbers only!" ? true : false
+            }
           />
           <TextField
             name="openHour"
@@ -151,11 +189,11 @@ const StoreModal = ({ open, handleClose }) => {
             id="openHour"
             select
             onChange={handleOpeningHoursChange}
-            value={openingHours}
-            style={{
-              marginBottom: 20,
+            defaultValue={isEdit ? user.store.opening_hours : openingHours}
+            sx={{
+              marginBottom: 4,
               width: "45%",
-              marginRight: 28,
+              marginRight: 3.5,
             }}
           >
             {hoursOfOperation.map((option, index) => (
@@ -169,9 +207,13 @@ const StoreModal = ({ open, handleClose }) => {
             label="Close Hour"
             type="text"
             id="closeHour"
-            style={{ marginBottom: 20, width: "45%" }}
+            sx={{ marginBottom: 4, width: "45%" }}
             onChange={handleClosingHoursChange}
-            value={closingHours}
+            defaultValue={
+              isEdit && user.store.closing_hours
+                ? user.store.closing_hours
+                : closingHours
+            }
             select
           >
             {hoursOfOperation.map((option, index) => (
@@ -186,9 +228,9 @@ const StoreModal = ({ open, handleClose }) => {
           fullWidth
           sx={{ mt: 2, mb: 2 }}
           variant="contained"
-          style={{ backgroundColor: "#11AA60" }}
+          style={{ backgroundColor: isEdit ? "#1976d2" : "#11AA60" }}
         >
-          Add Store
+          {isEdit ? "Edit Store" : "Add Store"}
         </Button>
       </Box>
     </Modal>

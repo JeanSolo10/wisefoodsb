@@ -7,6 +7,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import UpdateBuyerModal from "./UpdateBuyerModal";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContentText from "@mui/material/DialogContentText";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout_user } from "../features/redux/users/userSlice";
 import axiosInstance from "../utils/axios";
 
 const BuyerProfile = () => {
@@ -14,12 +21,35 @@ const BuyerProfile = () => {
   const [foodSaved, setFoodSaved] = useState(0);
   const [moneySaved, setMoneySaved] = useState(0);
   const [purchasedProducts, setPurchasedProducts] = useState([]);
+  const [error, setError] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const user = useSelector((state) => state.users);
-  const { store } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  /* Dialog Reqs */
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDeleteClose = async () => {
+    try {
+      await axiosInstance.delete(`/api/v1/users/${user.id}`);
+      dispatch(logout_user());
+      navigate("/register", { replace: true });
+    } catch (error) {
+      setError(error.message);
+    }
+    setOpen(false);
+    handleDialogClose();
+  };
 
   useEffect(() => {
     fetchPurchasedProducts();
@@ -50,6 +80,34 @@ const BuyerProfile = () => {
     <>
       <ResponsiveAppBar />
       <UpdateBuyerModal open={open} handleClose={handleClose} />
+      {!user.first_name ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          marginTop={2}
+        >
+          <Typography
+            sx={{
+              marginBottom: 2,
+              padding: 1,
+              fontSize: 20,
+              fontWeight: 600,
+            }}
+          >
+            Welcome to WiseFoodSB!
+          </Typography>
+          <Typography sx={{ marginBottom: 2, padding: 1, fontSize: 18 }}>
+            Please add a First Name (can be username) for your profile, by
+            clicking on the Update Profile button below.
+            <br />
+            <br />
+            This will help the store know who will pickup the product. Other
+            fields are not required, but can be added.
+          </Typography>
+        </Box>
+      ) : null}
       <Grid container mt={2}>
         <Grid
           item
@@ -191,6 +249,7 @@ const BuyerProfile = () => {
                 variant="contained"
                 sx={{
                   backgroundColor: "primary.main",
+                  fontWeight: 600,
                 }}
                 onClick={handleOpen}
               >
@@ -200,10 +259,31 @@ const BuyerProfile = () => {
                 variant="contained"
                 style={{
                   backgroundColor: "#F40B27",
+                  fontWeight: 600,
                 }}
+                onClick={handleDialogOpen}
               >
                 Delete Account
               </Button>
+              <Dialog
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Are you sure you want to delete your account?"}
+                </DialogTitle>
+                <DialogContentText sx={{ textAlign: "center" }}>
+                  All your information will be deleted from the site.
+                </DialogContentText>
+                <DialogActions>
+                  <Button onClick={handleDialogClose}>Cancel</Button>
+                  <Button onClick={handleDeleteClose} autoFocus>
+                    Delete
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </Box>
         </Grid>
@@ -242,9 +322,28 @@ const BuyerProfile = () => {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                sx={{ backgroundColor: "#eaeff1" }}
+                sx={{
+                  backgroundColor:
+                    product.transaction_status === "PENDING"
+                      ? "#11AA60"
+                      : "#eaeff1",
+                }}
               >
-                <Typography sx={{ fontWeight: 700 }}>{product.name}</Typography>
+                <Typography
+                  sx={{
+                    fontWeight:
+                      product.transaction_status === "PENDING" ? 900 : 700,
+                    color:
+                      product.transaction_status === "PENDING"
+                        ? "white"
+                        : "black",
+                  }}
+                >
+                  {product.name}{" "}
+                  {product.transaction_status === "PENDING"
+                    ? " - ready for pickup!"
+                    : ""}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Box
@@ -280,7 +379,9 @@ const BuyerProfile = () => {
                       padding: 1,
                     }}
                   >
-                    {product.Store.address}
+                    {product.Store?.address
+                      ? product.Store.address
+                      : "Store was removed"}
                   </Typography>
                 </Box>
                 <Box>
@@ -300,7 +401,9 @@ const BuyerProfile = () => {
                       padding: 1,
                     }}
                   >
-                    {product.Store.phone_number}
+                    {product.Store?.phone_number
+                      ? product.Store.phone_number
+                      : "Store was removed"}
                   </Typography>
                 </Box>
               </AccordionDetails>

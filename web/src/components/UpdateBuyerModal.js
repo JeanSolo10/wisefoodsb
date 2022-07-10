@@ -45,6 +45,13 @@ const UpdateBuyerModal = ({ open, handleClose }) => {
     const email = data.get("email");
     const address = data.get("address");
 
+    setError("");
+
+    if (isNaN(Number(phone_number))) {
+      setError("Phone number must contain numbers only!");
+      return;
+    }
+
     const body = {
       first_name: first_name,
       last_name: last_name,
@@ -75,6 +82,8 @@ const UpdateBuyerModal = ({ open, handleClose }) => {
       }
     } catch (error) {
       setError("There was an error. Please try again later.");
+    } finally {
+      setError("");
     }
   };
 
@@ -123,11 +132,14 @@ const UpdateBuyerModal = ({ open, handleClose }) => {
             fullWidth
             name="phoneNumber"
             label="Phone Number"
-            type="number"
+            type="text"
             id="phoneNumber"
             defaultValue={user.phone_number}
             style={{ marginBottom: 10 }}
             helperText="Please enter only numbers"
+            error={
+              error === "Phone number must contain numbers only!" ? true : false
+            }
           />
           <TextField
             fullWidth
@@ -153,7 +165,12 @@ const UpdateBuyerModal = ({ open, handleClose }) => {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 2, mb: 2, backgroundColor: "primary.main" }}
+          sx={{
+            mt: 2,
+            mb: 2,
+            backgroundColor: "primary.main",
+            fontWeight: 600,
+          }}
         >
           Update Profile
         </Button>
