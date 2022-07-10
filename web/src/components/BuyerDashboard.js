@@ -32,7 +32,6 @@ const BuyerDashboard = () => {
   const [allProducts, setAllProducts] = useState();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [listedProducts, setListedProducts] = useState([]);
-  const [cartProducts, setCartProducts] = useState({});
 
   const [foodTypeFilter, setFoodTypeFilter] = useState("all");
   const [expirationDateSort, setExpirationDateSort] = useState("all");
@@ -155,7 +154,18 @@ const BuyerDashboard = () => {
       >
         Welcome{user.first_name ? ` ${user.first_name}!` : `!`}
       </Typography>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          "@media (min-width:780px)": {
+            flexDirection: "row",
+            gap: 10,
+            marginLeft: 12,
+            marginRight: 12,
+          },
+        }}
+      >
         <TextField
           fullWidth
           name="type"
@@ -178,8 +188,6 @@ const BuyerDashboard = () => {
             </MenuItem>
           ))}
         </TextField>
-      </Box>
-      <Box>
         <TextField
           fullWidth
           name="date"
@@ -203,7 +211,19 @@ const BuyerDashboard = () => {
           ))}
         </TextField>
       </Box>
-      {listedProducts.length < 1 && <Box>No products available!</Box>}
+      {listedProducts.length < 1 && (
+        <Box
+          sx={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography sx={{ fontSize: 22, mt: 2 }}>
+            No products available!
+          </Typography>
+        </Box>
+      )}
       <Box
         sx={{
           "@media (min-width:780px)": {
