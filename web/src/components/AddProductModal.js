@@ -95,6 +95,7 @@ const AddProductModal = ({
       const newItem = response.data.results.product;
       setListedItems([newItem, ...listedItems]);
       handleCloseAddProduct();
+      setImageName("");
     } catch (error) {
       setError(error.message);
     }
