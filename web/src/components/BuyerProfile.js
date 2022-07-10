@@ -322,9 +322,28 @@ const BuyerProfile = () => {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                sx={{ backgroundColor: "#eaeff1" }}
+                sx={{
+                  backgroundColor:
+                    product.transaction_status === "PENDING"
+                      ? "#11AA60"
+                      : "#eaeff1",
+                }}
               >
-                <Typography sx={{ fontWeight: 700 }}>{product.name}</Typography>
+                <Typography
+                  sx={{
+                    fontWeight:
+                      product.transaction_status === "PENDING" ? 900 : 700,
+                    color:
+                      product.transaction_status === "PENDING"
+                        ? "white"
+                        : "black",
+                  }}
+                >
+                  {product.name}{" "}
+                  {product.transaction_status === "PENDING"
+                    ? " - ready for pickup!"
+                    : ""}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Box
