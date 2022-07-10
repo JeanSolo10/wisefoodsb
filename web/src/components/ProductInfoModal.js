@@ -50,10 +50,15 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
         <Box
           component="img"
           sx={{
-            height: 250,
+            height: 150,
             width: "100%",
             display: "flex",
+            mt: 1,
+            mb: 1,
             "@media (min-width:780px)": {
+              height: 250,
+              mb: 2,
+              mt: 2,
               width: "80%",
               marginLeft: "auto",
               marginRight: "auto",
@@ -65,26 +70,26 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Original price</Typography>
           <Typography
-            sx={{ lineHeight: 2 }}
+            sx={{ lineHeight: 3 }}
           >{`¥${selectedProduct.original_price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Current Price</Typography>
           <Typography
-            sx={{ lineHeight: 2 }}
+            sx={{ lineHeight: 3 }}
           >{`¥${selectedProduct.price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Type</Typography>
-          <Typography sx={{ lineHeight: 2 }}>{selectedProduct.type}</Typography>
+          <Typography sx={{ lineHeight: 3 }}>{selectedProduct.type}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Store</Typography>
-          <Typography sx={{ lineHeight: 2 }}>{storeName}</Typography>
+          <Typography sx={{ lineHeight: 3 }}>{storeName}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Best Before</Typography>
-          <Typography sx={{ lineHeight: 2 }}>
+          <Typography sx={{ lineHeight: 3 }}>
             {formatDate(selectedProduct.expiration_date)}
           </Typography>
         </Box>

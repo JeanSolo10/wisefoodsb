@@ -41,7 +41,14 @@ const BuyerDashboard = () => {
       `/api/v1/products/available/${true}`
     );
     const products = response.data.results;
-    setListedProducts(products);
+    
+    // filter out expired food
+    const dateToday = new Date();
+    const notExpiredFoods = products.filter(product => {
+      const productExpirationDate = new Date(product.expiration_date);
+      return dateToday < productExpirationDate;
+    })
+    setListedProducts(notExpiredFoods);
   };
 
   const handleProductInfo = (product) => {
