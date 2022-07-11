@@ -117,7 +117,7 @@ const BuyerProfile = () => {
             margin: 1,
             border: 1,
             borderColor: "black",
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               marginLeft: "auto",
               marginRight: "auto",
             },
@@ -153,7 +153,7 @@ const BuyerProfile = () => {
             margin: 1,
             border: 1,
             borderColor: "black",
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               marginLeft: "auto",
               marginRight: "auto",
             },
@@ -188,7 +188,7 @@ const BuyerProfile = () => {
             border: 1,
             borderColor: "black",
             margin: 1,
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               marginLeft: "auto",
               marginRight: "auto",
             },
@@ -297,7 +297,7 @@ const BuyerProfile = () => {
             margin: 1,
             maxHeight: 300,
             overflow: "auto",
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               marginLeft: "auto",
               marginRight: "auto",
               maxHeight: 350,

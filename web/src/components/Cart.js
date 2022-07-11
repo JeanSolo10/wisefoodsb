@@ -48,7 +48,7 @@ const Cart = () => {
           container
           spacing={2}
           sx={{
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               mt: 1,
               flexDirection: "row-reverse",
               ml: 2,
@@ -60,7 +60,7 @@ const Cart = () => {
             <Box>
               <Card
                 sx={{
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     mr: 8,
                   },
                 }}
@@ -108,7 +108,7 @@ const Cart = () => {
                   mb: 2,
                   display: "flex",
                   flexDirection: "column",
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     display: "flex",
                     flexDirection: "row",
                   },
@@ -119,7 +119,7 @@ const Cart = () => {
                     component="img"
                     height="150"
                     sx={{
-                      "@media (min-width:780px)": {
+                      "@media (min-width:769px)": {
                         height: 230,
                         width: 300,
                       },
@@ -130,7 +130,7 @@ const Cart = () => {
                 </Card>
                 <Card
                   sx={{
-                    "@media (min-width:780px)": {
+                    "@media (min-width:769px)": {
                       width: "100%",
                     },
                   }}

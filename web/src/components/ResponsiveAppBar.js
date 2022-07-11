@@ -192,7 +192,7 @@ const ResponsiveAppBar = () => {
                     mr: 1,
                     color: "white",
                     fontSize: 40,
-                    "@media (min-width:780px)": {
+                    "@media (min-width:769px)": {
                       fontSize: 45,
                       mr: 2,
                     },

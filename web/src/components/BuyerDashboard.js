@@ -147,7 +147,7 @@ const BuyerDashboard = () => {
           pt: 2,
           fontSize: "1.5rem",
           mb: 2,
-          "@media (min-width:780px)": {
+          "@media (min-width:769px)": {
             mb: 3,
           },
         }}
@@ -158,7 +158,7 @@ const BuyerDashboard = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          "@media (min-width:780px)": {
+          "@media (min-width:769px)": {
             flexDirection: "row",
             gap: 10,
             marginLeft: 12,
@@ -174,7 +174,7 @@ const BuyerDashboard = () => {
           id="type"
           sx={{
             marginBottom: 3,
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               mb: 4,
             },
           }}
@@ -196,7 +196,7 @@ const BuyerDashboard = () => {
           id="date"
           sx={{
             marginBottom: 3,
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               mb: 4,
             },
           }}
@@ -226,7 +226,7 @@ const BuyerDashboard = () => {
       )}
       <Box
         sx={{
-          "@media (min-width:780px)": {
+          "@media (min-width:769px)": {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, 400px)", //the width of the card
             justifyContent: "center",
@@ -243,7 +243,7 @@ const BuyerDashboard = () => {
                 justifyContent: "space-between",
                 backgroundColor: "#DDE2E4",
                 height: 40,
-                "@media (min-width:780px)": {
+                "@media (min-width:769px)": {
                   width: 400,
                 },
               }}
@@ -262,7 +262,7 @@ const BuyerDashboard = () => {
               height="150"
               sx={{
                 objectFit: "contain",
-                "@media (min-width:780px)": {
+                "@media (min-width:769px)": {
                   height: 200,
                 },
               }}

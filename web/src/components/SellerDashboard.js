@@ -100,7 +100,7 @@ const SellerDashboard = () => {
           pt: 2,
           fontSize: "1.5rem",
           mb: 2,
-          "@media (min-width:780px)": {
+          "@media (min-width:769px)": {
             mb: 3,
           },
         }}
@@ -118,7 +118,7 @@ const SellerDashboard = () => {
           variant="contained"
           style={{ backgroundColor: "#11AA60", fontWeight: 600 }}
           sx={{
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               mb: 3,
             },
           }}
@@ -129,7 +129,7 @@ const SellerDashboard = () => {
       </Box>
       <Box
         sx={{
-          "@media (min-width:780px)": {
+          "@media (min-width:769px)": {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, 400px)", //the width of the card
             justifyContent: "center",
@@ -146,7 +146,7 @@ const SellerDashboard = () => {
                 justifyContent: "space-between",
                 backgroundColor: "#DDE2E4",
                 height: 40,
-                "@media (min-width:780px)": {
+                "@media (min-width:769px)": {
                   width: 400,
                 },
               }}
@@ -165,7 +165,7 @@ const SellerDashboard = () => {
               height="150"
               sx={{
                 objectFit: "contain",
-                "@media (min-width:780px)": {
+                "@media (min-width:769px)": {
                   height: 200,
                 },
               }}
@@ -216,7 +216,7 @@ const SellerDashboard = () => {
               fontSize: "1.5rem",
               borderBottom: 2,
               borderColor: "#DDE2E4",
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 marginLeft: 8,
                 marginRight: 8,
               },
@@ -230,11 +230,11 @@ const SellerDashboard = () => {
             <Box
               key={`pendingProduct${index}`}
               sx={{
-                "@media (min-width:780px)": {
+                "@media (min-width:769px)": {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-evenly",
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     marginLeft: 8,
                     marginRight: 8,
                   },
@@ -250,7 +250,7 @@ const SellerDashboard = () => {
               <Typography
                 sx={{
                   fontSize: "1.5rem",
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     marginLeft: 8,
                     marginRight: 8,
                   },

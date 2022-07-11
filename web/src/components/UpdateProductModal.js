@@ -24,7 +24,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "75vw",
   height: "80vh",
-  "@media (min-width:780px)": {
+  "@media (min-width:769px)": {
     width: 400,
   },
   bgcolor: "background.paper",

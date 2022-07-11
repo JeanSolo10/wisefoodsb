@@ -25,7 +25,7 @@ const style = {
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
-  "@media (min-width:780px)": {
+  "@media (min-width:769px)": {
     width: 400,
   },
 };
@@ -136,7 +136,7 @@ const AddProductModal = ({
             sx={{
               marginBottom: 3,
               marginTop: 3,
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 mb: 4,
               },
             }}
@@ -150,7 +150,7 @@ const AddProductModal = ({
             id="type"
             sx={{
               marginBottom: 3,
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 mb: 4,
               },
             }}
@@ -173,7 +173,7 @@ const AddProductModal = ({
             id="price"
             sx={{
               marginBottom: 3,
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 mb: 4,
               },
             }}
@@ -187,7 +187,7 @@ const AddProductModal = ({
             id="original_price"
             sx={{
               marginBottom: 3,
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 mb: 4,
               },
             }}
@@ -201,7 +201,7 @@ const AddProductModal = ({
             defaultValue={""}
             sx={{
               marginBottom: 3,
-              "@media (min-width:780px)": {
+              "@media (min-width:769px)": {
                 mb: 4,
               },
             }}

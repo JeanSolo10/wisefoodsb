@@ -37,7 +37,7 @@ const StripeSuccess = () => {
         <Typography
           sx={{
             fontSize: 20,
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               fontSize: 30,
             },
           }}
@@ -47,7 +47,7 @@ const StripeSuccess = () => {
         <Typography
           sx={{
             fontSize: 20,
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               fontSize: 30,
             },
           }}

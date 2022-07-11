@@ -154,7 +154,7 @@ const Login = () => {
                 sx={{
                   color: "#f44336",
                   width: 343,
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     width: 396,
                   },
                 }}
@@ -177,7 +177,7 @@ const Login = () => {
                 sx={{
                   color: "#f44336",
                   width: 343,
-                  "@media (min-width:780px)": {
+                  "@media (min-width:769px)": {
                     width: 396,
                   },
                 }}

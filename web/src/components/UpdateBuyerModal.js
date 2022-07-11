@@ -22,7 +22,7 @@ const style = {
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
-  "@media (min-width:780px)": {
+  "@media (min-width:769px)": {
     width: 400,
   },
 };

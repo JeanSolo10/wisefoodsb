@@ -16,7 +16,7 @@ const style = {
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
-  "@media (min-width:780px)": {
+  "@media (min-width:769px)": {
     width: 400,
     height: "80vh",
   },
@@ -55,8 +55,8 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
             display: "flex",
             mt: 1,
             mb: 1,
-            "@media (min-width:780px)": {
-              height: 250,
+            "@media (min-width:769px)": {
+              height: 230,
               mb: 2,
               mt: 2,
               width: "80%",
@@ -70,26 +70,56 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Original price</Typography>
           <Typography
-            sx={{ lineHeight: 3 }}
+            sx={{ lineHeight: 2 }}
           >{`¥${selectedProduct.original_price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Current Price</Typography>
           <Typography
-            sx={{ lineHeight: 3 }}
+            sx={{
+              lineHeight: 2,
+              "@media (min-width:1200px)": {
+                lineHeight: 2.1,
+              },
+            }}
           >{`¥${selectedProduct.price}`}</Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Type</Typography>
-          <Typography sx={{ lineHeight: 3 }}>{selectedProduct.type}</Typography>
+          <Typography
+            sx={{
+              lineHeight: 2,
+              "@media (min-width:1200px)": {
+                lineHeight: 2.1,
+              },
+            }}
+          >
+            {selectedProduct.type}
+          </Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Store</Typography>
-          <Typography sx={{ lineHeight: 3 }}>{storeName}</Typography>
+          <Typography
+            sx={{
+              lineHeight: 2,
+              "@media (min-width:1200px)": {
+                lineHeight: 2.1,
+              },
+            }}
+          >
+            {storeName}
+          </Typography>
         </Box>
         <Box>
           <Typography sx={{ fontWeight: 600 }}>Best Before</Typography>
-          <Typography sx={{ lineHeight: 3 }}>
+          <Typography
+            sx={{
+              lineHeight: 2,
+              "@media (min-width:1200px)": {
+                lineHeight: 2.1,
+              },
+            }}
+          >
             {formatDate(selectedProduct.expiration_date)}
           </Typography>
         </Box>
@@ -100,7 +130,7 @@ const ProductInfoModal = ({ open, handleClose, selectedProduct }) => {
             mt: 2,
             mb: 2,
             backgroundColor: "primary.main",
-            "@media (min-width:780px)": {
+            "@media (min-width:769px)": {
               mt: 3,
             },
           }}
