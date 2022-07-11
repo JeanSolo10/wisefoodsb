@@ -8,7 +8,11 @@
 
 
 
-This app is hosted at: https://wisefoodsb.herokuapp.com/
+## This app is hosted at: 
+- https://wisefoodsb.herokuapp.com/
+
+## Demo video: 
+- https://www.youtube.com/watch?v=baYVmxRtOsU&ab_channel=JeanSolo
 
 
 ## What is WiseFoodSB?
